@@ -67,24 +67,24 @@ uint8_t DynamixelInterfaceImpl::prepareTransaction()
 
 void DynamixelInterfaceImpl::endTransaction(DynamixelStatus status)
 {
-	if (status == 99) mgos_msleep(10);
-	else if (status != DYN_STATUS_OK) mgos_msleep(2);
-	writeMode(); // sometimes after uart recongf it send trash byte
-	mgos_uart_configure(mUARTno, &mUartCfgSaved); // ...
-	mgos_usleep(150);  // and we throw it to dxl
-	readMode();
+	// if (status == 99) mgos_msleep(10);
+	// else if (status != DYN_STATUS_OK) mgos_msleep(2);
+	// writeMode(); // sometimes after uart recongf it send trash byte
+	// mgos_uart_configure(mUARTno, &mUartCfgSaved); // ...
+	// mgos_usleep(150);  // and we throw it to dxl
+	// readMode();
 }
 
 
 void DynamixelInterfaceImpl::sendPacket(const DynamixelPacket &aPacket)
 {
-	writeMode();
-
 	// empty receive buffer, in case of a error in previous transaction
 	uint8_t dummy;
 	while (mgos_uart_read_avail(mUARTno)) {
 		mgos_uart_read(mUARTno, (void *) &dummy, 1);
 	}
+
+	writeMode();
 
 	dxlWrite(0xFF);
 	dxlWrite(0xFF);
