@@ -70,7 +70,7 @@ void DynamixelInterfaceImpl::endTransaction(DynamixelStatus status)
 	// if (status == 99) mgos_msleep(10);
 	// else if (status != DYN_STATUS_OK) mgos_msleep(2);
 	// writeMode(); // sometimes after uart recongf it send trash byte
-	// mgos_uart_configure(mUARTno, &mUartCfgSaved); // ...
+	mgos_uart_configure(mUARTno, &mUartCfgSaved); // ...
 	// mgos_usleep(150);  // and we throw it to dxl
 	// readMode();
 }
