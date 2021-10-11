@@ -5,8 +5,10 @@
 
 #ifdef __cplusplus
 #include "DxlMaster.h"
+#include "DynamixelConsole.h"
 #else
 typedef struct DynamixelDeviceTag DynamixelDevice;
+typedef struct DynamixelConsoleTag DynamixelConsole;
 typedef void (*userUartCb_t)(uint16_t, uint8_t *,  void *);
 #endif
 
@@ -14,6 +16,9 @@ typedef void (*userUartCb_t)(uint16_t, uint8_t *,  void *);
 extern "C" {
 #endif
 
+DynamixelConsole *mgos_dxl_console_create(void);
+
+void mgos_dxl_console_loop(DynamixelConsole *console);
 
 DynamixelDevice *mgos_dxl_module_create(int model_id);
 

@@ -22,8 +22,8 @@ class Stream
 {
 	public:
 	size_t available(void){ return mgos_uart_read_avail(UART_0); }
-
-	char read() {
+	char read() 
+	{
 		char c;
 		if (mgos_uart_read(UART_0, &c, 1) != 1) {
 			return -1;
@@ -31,14 +31,18 @@ class Stream
 		return c;	
 	}
 
-	size_t write(char c) { return mgos_uart_write(UART_0, &c, 1); }
-	size_t write(const char *str) {
+	size_t write(char c) 
+	{ 
+		return mgos_uart_write(UART_0, &c, 1); 
+	}
+
+	size_t write(const char *str) 
+	{
 		if(str == NULL) {
             return 0;
         }
 		return mgos_uart_write(UART_0, str, strlen(str)); 
 	}
-	
 	void print(uint8_t c) { mgos_uart_write(UART_0, &c, 1); }
 	void print(const char *str) { write(str); }
   

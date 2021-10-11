@@ -1,7 +1,6 @@
 #include "DynamixelConsole.h"
 #include "mgos_system.h"
 
-
 const DynamixelCommand DynamixelConsole::sCommand[] = {
 	{"ping", &DynamixelConsole::ping},
 	{"read", &DynamixelConsole::read},
@@ -12,6 +11,8 @@ const DynamixelCommand DynamixelConsole::sCommand[] = {
 	{"sync_write", &DynamixelConsole::sync_write},
 	{"baud", &DynamixelConsole::baudrate},
 	};
+
+
 
 DynamixelConsole::DynamixelConsole()
 {
@@ -35,7 +36,7 @@ void DynamixelConsole::loop()
 	while ((c = mConsole.read()) != '\n' && c != '\r') {
 		if (c >= 32 && c <= 126 && (mLinePtr - &(mLineBuf[0])) < sLineBufSize) {
 			mConsole.write(c);
-			*mLinePtr=c;
+			*mLinePtr = c;
 			++mLinePtr;
 		}
 		else if (c == 8 && mLinePtr > &(mLineBuf[0])) {
@@ -51,7 +52,7 @@ void DynamixelConsole::loop()
 	
 	/* run command */
 	run();
-	
+
 	/* reset buffer */
 	mLinePtr = &(mLineBuf[0]);
 }
@@ -61,12 +62,13 @@ void DynamixelConsole::run()
 	char *argv[16];
 	int argc = parseCmd(argv);
 	
+	if (argv[0] == 0) return;
 	if (strcmp(argv[0], "help") == 0) {
 		printHelp();
 	} else {
 		const int commandNumber = sizeof(sCommand) / sizeof(DynamixelCommand);
 		for (int i = 0; i < commandNumber; ++i) {
-			if(strcmp(argv[0], sCommand[i].mName) == 0) {
+			if (strcmp(argv[0], sCommand[i].mName) == 0) {
 				DynamixelStatus status = (this->*(sCommand[i].mCallback))(argc, argv);
 				printStatus(status);
 				break;
@@ -77,7 +79,7 @@ void DynamixelConsole::run()
 
 int DynamixelConsole::parseCmd(char **argv)
 {
-	int argc=0;
+	int argc = 0;
 	char *ptr = &mLineBuf[0];
 	while (argc < 15) {
 		while (*ptr == ' ' && ptr < mLinePtr) {
@@ -94,10 +96,11 @@ int DynamixelConsole::parseCmd(char **argv)
 			++ptr;
 		}
 
-		*ptr='\0';
+		*ptr = '\0';
 		++ptr;
 		++argc;
-	}
+	} 
+
 	argv[argc] = 0;
 	return argc;
 }

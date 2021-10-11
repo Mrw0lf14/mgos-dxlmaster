@@ -1,6 +1,18 @@
 #include "mgos_dxlmaster.h"
 #include "mgos_rpc.h"
 
+DynamixelConsole *mgos_dxl_console_create(void)
+{
+    return new DynamixelConsole();
+}
+
+void mgos_dxl_console_loop(DynamixelConsole *console)
+{
+    if (console == nullptr) {
+        return;
+    }
+    console->loop();
+}
 
 
 DynamixelDevice *mgos_dxl_module_create(int model_id)
@@ -20,8 +32,7 @@ void mgos_dxl_master_enable(uint8_t state)
 
 uint8_t mgos_dxl_init(DynamixelDevice *module)
 {
-    if (module == nullptr)
-    {
+    if (module == nullptr) {
         module->setStatus(DYN_STATUS_SOFT_ERROR);
         return 0;
     }
@@ -30,8 +41,7 @@ uint8_t mgos_dxl_init(DynamixelDevice *module)
 
 uint8_t mgos_dxl_status(DynamixelDevice *module)
 {
-    if (module == nullptr)
-    {
+    if (module == nullptr) {
         module->setStatus(DYN_STATUS_SOFT_ERROR);
         return 0;
     }
@@ -40,8 +50,7 @@ uint8_t mgos_dxl_status(DynamixelDevice *module)
 
 uint8_t mgos_dxl_ping(DynamixelDevice *module)
 {
-    if (module == nullptr)
-    {
+    if (module == nullptr) {
         module->setStatus(DYN_STATUS_SOFT_ERROR);
         return 0;
     }
@@ -50,8 +59,7 @@ uint8_t mgos_dxl_ping(DynamixelDevice *module)
 
 uint8_t mgos_dxl_read(DynamixelDevice *module, uint8_t reg)
 {
-    if (module == nullptr)
-    {
+    if (module == nullptr) {
         module->setStatus(DYN_STATUS_SOFT_ERROR);
         return 0;
     }
@@ -62,8 +70,7 @@ uint8_t mgos_dxl_read(DynamixelDevice *module, uint8_t reg)
 
 uint8_t mgos_dxl_write(DynamixelDevice *module, uint8_t reg, uint8_t var)
 {
-    if (module == nullptr)
-    {
+    if (module == nullptr) {
         module->setStatus(DYN_STATUS_SOFT_ERROR);
         return 0;
     }

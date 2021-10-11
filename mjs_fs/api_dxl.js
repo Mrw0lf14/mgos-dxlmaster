@@ -56,3 +56,8 @@ let DxlMaster = {
   
     set_uart_callback: ffi('void mgos_dxl_setUserUartCb( void(*)(int, void *, userdata), userdata)')
 };
+
+let DinamixelConsole = {
+    create: ffi('void *mgos_dxl_console_create(void)'),
+    loop: ffi('void mgos_dxl_console_loop(void *)')
+}
