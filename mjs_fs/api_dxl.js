@@ -1,6 +1,7 @@
 let DynamixelDevice = {
     _create: ffi('void *mgos_dxl_module_create(int)'),
     _init: ffi('int mgos_dxl_init(void *)'),
+    _speed: ffi('void mgos_dxl_communicationSpeed(void *, int)'),
     _status: ffi('int mgos_dxl_status(void *)'),
     _ping: ffi('int mgos_dxl_ping(void *)'),
     _read: ffi('int mgos_dxl_read(void *, int)'),
@@ -12,6 +13,11 @@ let DynamixelDevice = {
             return DynamixelDevice._init(this.dxl);
         },
 
+        // Change baud
+        communicationSpeed: function (baud) {
+            DynamixelDevice._speed(this.dxl, baud);
+        },
+        
         // Status of last operation
         status: function () {
             return DynamixelDevice._status(this.dxl);

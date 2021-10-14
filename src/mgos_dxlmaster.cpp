@@ -39,6 +39,16 @@ uint8_t mgos_dxl_init(DynamixelDevice *module)
     return module->init();
 }
 
+void mgos_dxl_communicationSpeed(DynamixelDevice *module, uint32_t baud)
+{
+    if (module == nullptr) {
+        module->setStatus(DYN_STATUS_SOFT_ERROR);
+        return;
+    }
+    module->communicationSpeed(baud);
+}
+
+
 uint8_t mgos_dxl_status(DynamixelDevice *module)
 {
     if (module == nullptr) {
@@ -76,6 +86,8 @@ uint8_t mgos_dxl_write(DynamixelDevice *module, uint8_t reg, uint8_t var)
     }
     return module->write(reg, 1, &var);
 }
+
+
 
 
 void mgos_dxl_setUserUartCb(userUartCb_t cb, void *arg)

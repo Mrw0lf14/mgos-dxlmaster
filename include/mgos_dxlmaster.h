@@ -28,6 +28,8 @@ void mgos_dxl_master_enable(uint8_t state);
 
 uint8_t mgos_dxl_init(DynamixelDevice *module);
 
+void mgos_dxl_communicationSpeed(DynamixelDevice *module, uint32_t baud);
+
 uint8_t mgos_dxl_status(DynamixelDevice *module); 
 
 uint8_t mgos_dxl_ping(DynamixelDevice *module);
