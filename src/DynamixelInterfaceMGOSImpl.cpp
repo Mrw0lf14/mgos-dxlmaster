@@ -15,7 +15,7 @@ HardwareDynamixelInterface::~HardwareDynamixelInterface() {}
 
 
 DynamixelInterfaceImpl::DynamixelInterfaceImpl(uint8_t aUART_no):
-	 mUARTno(aUART_no)
+	mUARTno(aUART_no)
 {
 	readMode();
 	mgos_gpio_set_mode(DXL_DIR_TXD_PIN, MGOS_GPIO_MODE_OUTPUT);

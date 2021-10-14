@@ -63,7 +63,89 @@ let DxlMaster = {
     set_uart_callback: ffi('void mgos_dxl_setUserUartCb( void(*)(int, void *, userdata), userdata)')
 };
 
-let DinamixelConsole = {
+let DynamixelConsole = {
     create: ffi('void *mgos_dxl_console_create(void)'),
     loop: ffi('void mgos_dxl_console_loop(void *)')
-}
+};
+
+let Dynamixelmotor = {
+    _create: ffi('void *mgos_dxl_motor_create(int)'),
+
+    _wheelMode: ffi('void mgos_dxl_motor_wheelMode(void *)'),
+    _jointMode: ffi('void mgos_dxl_motor_wheelMode(void *, int, int)'),
+    _enableTorque: ffi('void mgos_dxl_motor_enableTorque(void *, int)'),
+    _speed: ffi('void mgos_dxl_motor_speed(void *, int)'),
+    _goalPosition: ffi('void mgos_dxl_motor_goalPosition(void *, int)'),
+    _led: ffi('void mgos_dxl_motor_led(void *, int)'),
+    _currentPosition: ffi('int mgos_dxl_motor_currentPosition(void *)'),
+    _getCurrentPosition: ffi('int mgos_dxl_motor_getCurrentPosition(void *, void *)'),
+    _setComplianceMargins: ffi('int mgos_dxl_motor_setComplianceMargins(void *, void *, void *, void *, void *)'),
+    _getComplianceMargins: ffi('int mgos_dxl_motor_getComplianceMargins(void *, void *, void *, void *, void *)'),
+    _isMoving: ffi('int mgos_dxl_motor_isMoving(void *, void *)'),
+    _isMoving: ffi('int mgos_dxl_motor_isMoving(void *, void *)'),
+
+    _proto: {
+        // Wheel Mode
+        wheelMode: function () {
+            Dynamixelmotor._wheelMode(this.id);
+        },
+
+        // Joint Mode
+        jointMode: function (aCWLimit, aCCWLimit) {
+            Dynamixelmotor._jointMode(this.id, aCWLimit, aCCWLimit);
+        },
+
+        // Enable Torque 
+        enableTorque: function (aTorque) {
+            Dynamixelmotor._enableTorque(this.id, aTorque);
+        },
+
+        // Speed
+        speed: function (aSpeed) {
+            Dynamixelmotor._speed(this.id, aSpeed);
+        },
+
+        // Goal Position
+        goalPosition: function (aPosition) {
+            Dynamixelmotor._goalPosition(this.id, aPosition);
+        },
+
+        // Led
+        led: function (aState) {
+            Dynamixelmotor._led(this.id, aState);
+        },
+
+        // Current Position
+        currentPosition: function () {
+            return Dynamixelmotor._currentPosition(this.id);
+        },
+
+        // GetCurrentPosition
+        getCurrentPosition: function (pos) {
+            return Dynamixelmotor._getCurrentPosition(this.id, pos);
+        },
+
+        // Set Compliance Margins
+        setComplianceMargins: function (cw_margin, ccw_margin, cw_slope, ccw_slope) {
+            return Dynamixelmotor._setComplianceMargins(this.id, cw_margin, ccw_margin, cw_slope, ccw_slope);
+        },
+
+        // Get Compliance Margins
+        getComplianceMargins: function (cw_margin, ccw_margin, cw_slope, ccw_slope) {
+            return Dynamixelmotor._getComplianceMargins(this.id, cw_margin, ccw_margin, cw_slope, ccw_slope);
+        },
+
+        // Is Moving
+        isMoving: function (moving) {
+            return Dynamixelmotor._isMoving(this.id, moving);
+        }
+
+    },
+
+    // Create an Dynamixelmotor module instance * given id
+    create: function (id) {
+        let motor = Object.create(Dynamixelmotor._proto);
+        motor.id = Dynamixelmotor._create(id);
+        return motor;
+    }
+};
