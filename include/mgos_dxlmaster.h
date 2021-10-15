@@ -9,6 +9,8 @@
 #else
 typedef struct DynamixelDeviceTag DynamixelDevice;
 typedef struct DynamixelConsoleTag DynamixelConsole;
+typedef struct DynamixelMotorTag DynamixelMotor;
+typedef struct DynamixelStatusTag DynamixelStatus;
 typedef void (*userUartCb_t)(uint16_t, uint8_t *,  void *);
 #endif
 
@@ -33,17 +35,17 @@ void mgos_dxl_console_loop(DynamixelConsole *console);
 DynamixelMotor *mgos_dxl_motor_create(int motor_id);
 void mgos_dxl_motor_wheelMode(DynamixelMotor *motor);
 void mgos_dxl_motor_jointMode(DynamixelMotor *motor, 
-                              uint16_t aCWLimit = 0, 
-                              uint16_t aCCWLimit = 0x3FF);
+                              uint16_t aCWLimit, 
+                              uint16_t aCCWLimit);
 
-void mgos_dxl_motor_enableTorque(DynamixelMotor *motor, bool aTorque = true);
+void mgos_dxl_motor_enableTorque(DynamixelMotor *motor, bool aTorque);
 void mgos_dxl_motor_speed(DynamixelMotor *motor, int16_t aSpeed);
 void mgos_dxl_motor_goalPosition(DynamixelMotor *motor, uint16_t aPosition);
 void mgos_dxl_motor_led(DynamixelMotor *motor, uint8_t aState);
 uint16_t  mgos_dxl_motor_currentPosition(DynamixelMotor *motor);
 DynamixelStatus  mgos_dxl_motor_getCurrentPosition(DynamixelMotor *motor, 
-                                                   uint16_t &pos);
-                                                   
+                                                   uint16_t *pos);
+
 DynamixelStatus  mgos_dxl_motor_setComplianceMargins(DynamixelMotor *motor, 
                                                      uint8_t cw_margin, 
                                                      uint8_t ccw_margin, 
@@ -51,13 +53,13 @@ DynamixelStatus  mgos_dxl_motor_setComplianceMargins(DynamixelMotor *motor,
                                                      uint8_t ccw_slope);
 
 DynamixelStatus  mgos_dxl_motor_getComplianceMargins(DynamixelMotor *motor, 
-                                                     uint8_t &cw_margin, 
-                                                     uint8_t &ccw_margin, 
-                                                     uint8_t &cw_slope, 
-                                                     uint8_t &ccw_slope);
+                                                     uint8_t *cw_margin, 
+                                                     uint8_t *ccw_margin, 
+                                                     uint8_t *cw_slope, 
+                                                     uint8_t *ccw_slope);
 
 DynamixelStatus  mgos_dxl_motor_isMoving(DynamixelMotor *motor, 
-                                         uint8_t &moving);
+                                         uint8_t *moving);
 
 void mgos_dxl_setUserUartCb(userUartCb_t cb, void *arg);
 void mgos_dxl_uartUserCb(uint16_t len, uint8_t *data);

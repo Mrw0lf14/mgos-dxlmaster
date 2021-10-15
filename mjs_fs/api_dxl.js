@@ -126,13 +126,19 @@ let Dynamixelmotor = {
         },
 
         // Set Compliance Margins
-        setComplianceMargins: function (cw_margin, ccw_margin, cw_slope, ccw_slope) {
-            return Dynamixelmotor._setComplianceMargins(this.id, cw_margin, ccw_margin, cw_slope, ccw_slope);
+        setComplianceMargins: function (cw_margin, ccw_margin, 
+                                        cw_slope, ccw_slope) {
+            return Dynamixelmotor._setComplianceMargins(this.id, 
+                                                        cw_margin, ccw_margin, 
+                                                        cw_slope, ccw_slope);
         },
 
         // Get Compliance Margins
-        getComplianceMargins: function (cw_margin, ccw_margin, cw_slope, ccw_slope) {
-            return Dynamixelmotor._getComplianceMargins(this.id, cw_margin, ccw_margin, cw_slope, ccw_slope);
+        getComplianceMargins: function (cw_margin, ccw_margin, 
+                                        cw_slope, ccw_slope) {
+            return Dynamixelmotor._getComplianceMargins(this.id, 
+                                                        cw_margin, ccw_margin, 
+                                                        cw_slope, ccw_slope);
         },
 
         // Is Moving

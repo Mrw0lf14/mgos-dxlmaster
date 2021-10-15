@@ -105,14 +105,14 @@ void mgos_dxl_motor_wheelMode(DynamixelMotor *motor)
 }
 
 void mgos_dxl_motor_jointMode(DynamixelMotor *motor, 
-                              uint16_t aCWLimit = 0, 
-                              uint16_t aCCWLimit = 0x3FF)
+                              uint16_t aCWLimit, 
+                              uint16_t aCCWLimit)
 {
     if (motor == nullptr) return;
     motor->jointMode(aCWLimit, aCCWLimit);
 }
 
-void mgos_dxl_motor_enableTorque(DynamixelMotor *motor, bool aTorque = true)
+void mgos_dxl_motor_enableTorque(DynamixelMotor *motor, bool aTorque)
 {
     if (motor == nullptr) return;
     motor->enableTorque(aTorque);
@@ -138,14 +138,14 @@ void mgos_dxl_motor_led(DynamixelMotor *motor, uint8_t aState)
 
 uint16_t  mgos_dxl_motor_currentPosition(DynamixelMotor *motor)
 {
-    if (motor == nullptr) return;
+    if (motor == nullptr) return 0;
     return motor->currentPosition();
 }
 
 DynamixelStatus  mgos_dxl_motor_getCurrentPosition(DynamixelMotor *motor, 
-                                                   uint16_t &pos)
+                                                   uint16_t *pos)
 {
-    if (motor == nullptr) return;
+    if (motor == nullptr) return 0;
     return motor->getCurrentPosition(pos);
 }
 
@@ -155,25 +155,25 @@ DynamixelStatus  mgos_dxl_motor_setComplianceMargins(DynamixelMotor *motor,
                                                      uint8_t cw_slope, 
                                                      uint8_t ccw_slope)
 {
-    if (motor == nullptr) return;
+    if (motor == nullptr) return 0;
     return motor->setComplianceMargins(cw_margin, ccw_margin, 
                                        cw_slope, ccw_slope);
 }
 
 DynamixelStatus  mgos_dxl_motor_getComplianceMargins(DynamixelMotor *motor, 
-                                                     uint8_t &cw_margin, 
-                                                     uint8_t &ccw_margin, 
-                                                     uint8_t &cw_slope, 
-                                                     uint8_t &ccw_slope)
+                                                     uint8_t *cw_margin, 
+                                                     uint8_t *ccw_margin, 
+                                                     uint8_t *cw_slope, 
+                                                     uint8_t *ccw_slope)
 {
-    if (motor == nullptr) return;
+    if (motor == nullptr) return 0;
     return motor->getComplianceMargins(cw_margin, ccw_margin, 
                                        cw_slope, ccw_slope);
 }
 
-DynamixelStatus  mgos_dxl_motor_isMoving(DynamixelMotor *motor, uint8_t &moving)
+DynamixelStatus  mgos_dxl_motor_isMoving(DynamixelMotor *motor, uint8_t *moving)
 {
-    if (motor == nullptr) return;
+    if (motor == nullptr) return 0;
     return motor->isMoving(moving);
 }
 
