@@ -26,8 +26,16 @@ DynamixelStatus mgos_dxl_init(DynamixelDevice *module);
 void mgos_dxl_communicationSpeed(DynamixelDevice *module, uint32_t baud);
 DynamixelStatus mgos_dxl_status(DynamixelDevice *module); 
 DynamixelStatus mgos_dxl_ping(DynamixelDevice *module);
-DynamixelStatus mgos_dxl_read(DynamixelDevice *module, uint8_t reg);
-DynamixelStatus mgos_dxl_write(DynamixelDevice *module, uint8_t reg, uint8_t var);
+uint8_t mgos_dxl_read(DynamixelDevice *module, uint8_t reg);
+uint16_t mgos_dxl_read16(DynamixelDevice *module, uint8_t reg);
+
+DynamixelStatus mgos_dxl_write(DynamixelDevice *module, 
+                               uint8_t reg, 
+                               uint8_t var);
+
+DynamixelStatus mgos_dxl_write16(DynamixelDevice *module, 
+                                uint8_t reg, 
+                                uint16_t var);                              
 
 DynamixelConsole *mgos_dxl_console_create(void);
 void mgos_dxl_console_loop(DynamixelConsole *console);

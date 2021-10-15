@@ -5,7 +5,9 @@ let DynamixelDevice = {
     _status: ffi('int mgos_dxl_status(void *)'),
     _ping: ffi('int mgos_dxl_ping(void *)'),
     _read: ffi('int mgos_dxl_read(void *, int)'),
+    _read16: ffi('int mgos_dxl_read16(void *, int)'),
     _write: ffi('int mgos_dxl_write(void *, int, int )'),
+    _write16: ffi('int mgos_dxl_write16(void *, int, int )'),
 
     _proto: {
         // Initialize module
@@ -28,9 +30,19 @@ let DynamixelDevice = {
             return DynamixelDevice._read(this.dxl, adr);
         },
 
+        // Read from module by adr
+        read16: function (adr) {
+            return DynamixelDevice._read16(this.dxl, adr);
+        },
+
         // Write to module by reg
         write: function (adr, wrdata) {
             return DynamixelDevice._write(this.dxl, adr, wrdata);
+        },
+
+        // Write to module by reg
+        write16: function (adr, wrdata) {
+            return DynamixelDevice._write16(this.dxl, adr, wrdata);
         },
 
     },

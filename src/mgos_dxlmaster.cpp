@@ -56,7 +56,7 @@ DynamixelStatus mgos_dxl_ping(DynamixelDevice *module)
     return module->ping();
 }
 
-DynamixelStatus mgos_dxl_read(DynamixelDevice *module, uint8_t reg)
+uint8_t mgos_dxl_read(DynamixelDevice *module, uint8_t reg)
 {
     if (module == nullptr) {
         module->setStatus(DYN_STATUS_SOFT_ERROR);
@@ -67,6 +67,18 @@ DynamixelStatus mgos_dxl_read(DynamixelDevice *module, uint8_t reg)
     return data;
 }
 
+uint16_t mgos_dxl_read16(DynamixelDevice *module, uint8_t reg)
+{
+    if (module == nullptr) {
+        module->setStatus(DYN_STATUS_SOFT_ERROR);
+        return 0;
+    }
+    uint16_t data;
+    module->read(reg, 2, (uint8_t *)&data);
+    return data;
+}
+
+
 DynamixelStatus mgos_dxl_write(DynamixelDevice *module, uint8_t reg, uint8_t var)
 {
     if (module == nullptr) {
@@ -74,6 +86,17 @@ DynamixelStatus mgos_dxl_write(DynamixelDevice *module, uint8_t reg, uint8_t var
         return 0;
     }
     return module->write(reg, 1, &var);
+}
+
+DynamixelStatus mgos_dxl_write16(DynamixelDevice *module, 
+                                 uint8_t reg, 
+                                 uint16_t var)
+{
+    if (module == nullptr) {
+        module->setStatus(DYN_STATUS_SOFT_ERROR);
+        return 0;
+    }
+    return module->write(reg, 2, &var);
 }
 
 /* Dynamixel Console **********************************************************/
