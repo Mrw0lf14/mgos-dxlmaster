@@ -72,7 +72,7 @@ let Dynamixelmotor = {
     _create: ffi('void *mgos_dxl_motor_create(int)'),
 
     _wheelMode: ffi('void mgos_dxl_motor_wheelMode(void *)'),
-    _jointMode: ffi('void mgos_dxl_motor_wheelMode(void *, int, int)'),
+    _jointMode: ffi('void mgos_dxl_motor_jointMode(void *, int, int)'),
     _enableTorque: ffi('void mgos_dxl_motor_enableTorque(void *, int)'),
     _speed: ffi('void mgos_dxl_motor_speed(void *, int)'),
     _goalPosition: ffi('void mgos_dxl_motor_goalPosition(void *, int)'),
@@ -82,7 +82,7 @@ let Dynamixelmotor = {
     _setComplianceMargins: ffi('int mgos_dxl_motor_setComplianceMargins(void *, void *, void *, void *, void *)'),
     _getComplianceMargins: ffi('int mgos_dxl_motor_getComplianceMargins(void *, void *, void *, void *, void *)'),
     _isMoving: ffi('int mgos_dxl_motor_isMoving(void *, void *)'),
-    _isMoving: ffi('int mgos_dxl_motor_isMoving(void *, void *)'),
+
 
     _proto: {
         // Wheel Mode
