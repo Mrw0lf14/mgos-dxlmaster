@@ -70,7 +70,7 @@ let DynamixelConsole = {
 
 let Dynamixelmotor = {
     _create: ffi('void *mgos_dxl_motor_create(int)'),
-
+    _init: ffi('int mgos_dxl_motor_init(void *)'),
     _wheelMode: ffi('void mgos_dxl_motor_wheelMode(void *)'),
     _jointMode: ffi('void mgos_dxl_motor_jointMode(void *, int, int)'),
     _enableTorque: ffi('void mgos_dxl_motor_enableTorque(void *, int)'),
@@ -85,6 +85,11 @@ let Dynamixelmotor = {
 
 
     _proto: {
+        // Init
+        init: function () {
+            return Dynamixelmotor._init(this.id);
+        },
+
         // Wheel Mode
         wheelMode: function () {
             Dynamixelmotor._wheelMode(this.id);

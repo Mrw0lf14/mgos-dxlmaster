@@ -22,17 +22,18 @@ extern "C" {
 DynamixelDevice *mgos_dxl_module_create(int model_id);
 void mgos_dxl_master_begin(uint32_t baud);
 void mgos_dxl_master_enable(uint8_t state);
-uint8_t mgos_dxl_init(DynamixelDevice *module);
+DynamixelStatus mgos_dxl_init(DynamixelDevice *module);
 void mgos_dxl_communicationSpeed(DynamixelDevice *module, uint32_t baud);
-uint8_t mgos_dxl_status(DynamixelDevice *module); 
-uint8_t mgos_dxl_ping(DynamixelDevice *module);
-uint8_t mgos_dxl_read(DynamixelDevice *module, uint8_t reg);
-uint8_t mgos_dxl_write(DynamixelDevice *module, uint8_t reg, uint8_t var);
+DynamixelStatus mgos_dxl_status(DynamixelDevice *module); 
+DynamixelStatus mgos_dxl_ping(DynamixelDevice *module);
+DynamixelStatus mgos_dxl_read(DynamixelDevice *module, uint8_t reg);
+DynamixelStatus mgos_dxl_write(DynamixelDevice *module, uint8_t reg, uint8_t var);
 
 DynamixelConsole *mgos_dxl_console_create(void);
 void mgos_dxl_console_loop(DynamixelConsole *console);
 
 DynamixelMotor *mgos_dxl_motor_create(int motor_id);
+DynamixelStatus mgos_dxl_motor_init(DynamixelMotor *module);
 void mgos_dxl_motor_wheelMode(DynamixelMotor *motor);
 void mgos_dxl_motor_jointMode(DynamixelMotor *motor, 
                               uint16_t aCWLimit, 

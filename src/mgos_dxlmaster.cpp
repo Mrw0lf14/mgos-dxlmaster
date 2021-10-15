@@ -19,7 +19,7 @@ void mgos_dxl_master_enable(uint8_t state)
     DxlMaster.setInterfaceEnable(state);
 }
 
-uint8_t mgos_dxl_init(DynamixelDevice *module)
+DynamixelStatus mgos_dxl_init(DynamixelDevice *module)
 {
     if (module == nullptr) {
         module->setStatus(DYN_STATUS_SOFT_ERROR);
@@ -38,7 +38,7 @@ void mgos_dxl_communicationSpeed(DynamixelDevice *module, uint32_t baud)
 }
 
 
-uint8_t mgos_dxl_status(DynamixelDevice *module)
+DynamixelStatus mgos_dxl_status(DynamixelDevice *module)
 {
     if (module == nullptr) {
         module->setStatus(DYN_STATUS_SOFT_ERROR);
@@ -47,7 +47,7 @@ uint8_t mgos_dxl_status(DynamixelDevice *module)
     return module->status();
 }
 
-uint8_t mgos_dxl_ping(DynamixelDevice *module)
+DynamixelStatus mgos_dxl_ping(DynamixelDevice *module)
 {
     if (module == nullptr) {
         module->setStatus(DYN_STATUS_SOFT_ERROR);
@@ -56,7 +56,7 @@ uint8_t mgos_dxl_ping(DynamixelDevice *module)
     return module->ping();
 }
 
-uint8_t mgos_dxl_read(DynamixelDevice *module, uint8_t reg)
+DynamixelStatus mgos_dxl_read(DynamixelDevice *module, uint8_t reg)
 {
     if (module == nullptr) {
         module->setStatus(DYN_STATUS_SOFT_ERROR);
@@ -67,7 +67,7 @@ uint8_t mgos_dxl_read(DynamixelDevice *module, uint8_t reg)
     return data;
 }
 
-uint8_t mgos_dxl_write(DynamixelDevice *module, uint8_t reg, uint8_t var)
+DynamixelStatus mgos_dxl_write(DynamixelDevice *module, uint8_t reg, uint8_t var)
 {
     if (module == nullptr) {
         module->setStatus(DYN_STATUS_SOFT_ERROR);
@@ -96,6 +96,15 @@ void mgos_dxl_console_loop(DynamixelConsole *console)
 DynamixelMotor *mgos_dxl_motor_create(int motor_id)
 {
     return new DynamixelMotor(motor_id);
+}
+
+DynamixelStatus mgos_dxl_motor_init(DynamixelMotor *module)
+{
+    if (module == nullptr) {
+        module->setStatus(DYN_STATUS_SOFT_ERROR);
+        return 0;
+    }
+    return module->init();
 }
 
 void mgos_dxl_motor_wheelMode(DynamixelMotor *motor)
