@@ -63,7 +63,7 @@ uint8_t mgos_dxl_read(DynamixelDevice *module, uint8_t reg)
         return 0;
     }
     uint8_t data = 0;
-    module->read(reg, 1, (uint8_t *)&data);
+    module->read(reg, 1, &data);
     return data;
 }
 
@@ -96,7 +96,7 @@ DynamixelStatus mgos_dxl_write16(DynamixelDevice *module,
         module->setStatus(DYN_STATUS_SOFT_ERROR);
         return 0;
     }
-    return module->write(reg, 2, &var);
+    return module->write(reg, 2, (uint8_t *)&var);
 }
 
 /* Dynamixel Console **********************************************************/
