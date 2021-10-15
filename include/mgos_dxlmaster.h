@@ -10,7 +10,7 @@
 typedef struct DynamixelDeviceTag DynamixelDevice;
 typedef struct DynamixelConsoleTag DynamixelConsole;
 typedef struct DynamixelMotorTag DynamixelMotor;
-typedef struct DynamixelStatusTag DynamixelStatus;
+typedef uint8_t DynamixelStatus;
 typedef void (*userUartCb_t)(uint16_t, uint8_t *,  void *);
 #endif
 
