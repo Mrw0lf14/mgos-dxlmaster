@@ -19,10 +19,15 @@ let DynamixelDevice = {
         communicationSpeed: function (baud) {
             DynamixelDevice._speed(this.dxl, baud);
         },
-        
+
         // Status of last operation
         status: function () {
             return DynamixelDevice._status(this.dxl);
+        },
+        
+        // Ping
+        ping: function () {
+            return DynamixelDevice._ping(this.dxl);
         },
 
         // Read from module by adr
