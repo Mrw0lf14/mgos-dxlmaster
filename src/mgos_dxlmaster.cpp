@@ -56,6 +56,15 @@ DynamixelStatus mgos_dxl_ping(DynamixelDevice *module)
     return module->ping();
 }
 
+DynamixelStatus mgos_dxl_reset(DynamixelDevice *module)
+{
+    if (module == nullptr) {
+        module->setStatus(DYN_STATUS_SOFT_ERROR);
+        return 0;
+    }
+    return module->reset();
+}
+
 uint8_t mgos_dxl_read(DynamixelDevice *module, uint8_t reg)
 {
     if (module == nullptr) {

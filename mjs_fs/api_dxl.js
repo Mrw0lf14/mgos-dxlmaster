@@ -4,6 +4,7 @@ let DynamixelDevice = {
     _speed: ffi('void mgos_dxl_communicationSpeed(void *, int)'),
     _status: ffi('int mgos_dxl_status(void *)'),
     _ping: ffi('int mgos_dxl_ping(void *)'),
+    _reset: ffi('int mgos_dxl_reset(void *)'),
     _read: ffi('int mgos_dxl_read(void *, int)'),
     _read16: ffi('int mgos_dxl_read16(void *, int)'),
     _write: ffi('int mgos_dxl_write(void *, int, int )'),
@@ -28,6 +29,11 @@ let DynamixelDevice = {
         // Ping
         ping: function () {
             return DynamixelDevice._ping(this.dxl);
+        },
+
+        // Reset
+        reset: function () {
+            return DynamixelDevice._reset(this.dxl);
         },
 
         // Read from module by adr

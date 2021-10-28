@@ -26,6 +26,7 @@ DynamixelStatus mgos_dxl_init(DynamixelDevice *module);
 void mgos_dxl_communicationSpeed(DynamixelDevice *module, uint32_t baud);
 DynamixelStatus mgos_dxl_status(DynamixelDevice *module); 
 DynamixelStatus mgos_dxl_ping(DynamixelDevice *module);
+DynamixelStatus mgos_dxl_reset(DynamixelDevice *module);
 uint8_t mgos_dxl_read(DynamixelDevice *module, uint8_t reg);
 uint16_t mgos_dxl_read16(DynamixelDevice *module, uint8_t reg);
 
