@@ -115,9 +115,9 @@ uint8_t mgos_dxl_direct_ping(uint8_t id)
     return DxlMaster.ping(id);
 }
 
-void mgos_dxl_direct_baud(uint32_t baud)
+void mgos_dxl_direct_begin(uint32_t baud)
 {
-    DxlMaster.ping(baud);
+    DxlMaster.begin(baud);
 }
 
 uint8_t mgos_dxl_direct_read(uint8_t id, uint8_t reg, 

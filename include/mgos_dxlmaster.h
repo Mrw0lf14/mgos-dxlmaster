@@ -39,13 +39,13 @@ DynamixelStatus mgos_dxl_write16(DynamixelDevice *module,
                                 uint16_t var);                              
 
 uint8_t mgos_dxl_direct_ping(uint8_t id);
-void mgos_dxl_direct_baud(uint32_t baud);
+void mgos_dxl_direct_begin(uint32_t baud);
 uint8_t mgos_dxl_direct_read(uint8_t id, uint8_t reg, 
                               const uint8_t *ptr, uint8_t size);
 uint8_t mgos_dxl_direct_write_byte(uint8_t id, uint8_t reg, uint8_t byte);
 uint8_t mgos_dxl_direct_write(uint8_t id, uint8_t reg, 
                               const uint8_t *ptr, uint8_t size);
-                              
+
 DynamixelConsole *mgos_dxl_console_create(void);
 void mgos_dxl_console_loop(DynamixelConsole *console);
 
