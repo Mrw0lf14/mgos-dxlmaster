@@ -108,6 +108,36 @@ DynamixelStatus mgos_dxl_write16(DynamixelDevice *module,
     return module->write(reg, 2, (uint8_t *)&var);
 }
 
+/* Dynamixel direct operations ************************************************/
+/******************************************************************************/
+uint8_t mgos_dxl_direct_ping(uint8_t id)
+{
+    return DxlMaster.ping(id);
+}
+
+void mgos_dxl_direct_baud(uint32_t baud)
+{
+    DxlMaster.ping(baud);
+}
+
+uint8_t mgos_dxl_direct_read(uint8_t id, uint8_t reg, 
+                             uint8_t *ptr, uint8_t size) 
+{
+    return DxlMaster.read(id, reg, size, ptr);
+}
+
+uint8_t mgos_dxl_direct_write_byte(uint8_t id, uint8_t reg, uint8_t byte) 
+{
+    return DxlMaster.write(id, reg, byte);
+}
+
+uint8_t mgos_dxl_direct_write(uint8_t id, uint8_t reg, 
+                              const uint8_t *ptr, uint8_t size) 
+{
+    return DxlMaster.write(id, reg, size, ptr);
+}
+
+
 /* Dynamixel Console **********************************************************/
 /******************************************************************************/
 
