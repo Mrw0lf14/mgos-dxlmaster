@@ -33,8 +33,6 @@ void DynamixelInterfaceImpl::begin(long unsigned int aBaud)
 	mUartCfgDxl.baud_rate = aBaud; 
 	mUartCfgDxl.rx_linger_micros = 50;
 
-	mUserUartDispatcherCb = NULL;
-
 	readMode();
 }
 
@@ -48,14 +46,14 @@ uint8_t DynamixelInterfaceImpl::prepareTransaction()
 {
 	if (DxlMaster.getInterfaceEnable() == false) return 1;
 
+    mUartUserCb_enabled = false;
+
 	mgos_uart_flush(mUARTno);
 
 	if (!mgos_uart_config_get(mUARTno, &mUartCfgSaved)) {
   		LOG(LL_ERROR, ("Failed to get cofg UART%d", mUARTno));
 		return 1;
 	}
-
-    
 
 	if (!mgos_uart_configure(mUARTno, &mUartCfgDxl)) {
 		endTransaction(99);
@@ -70,9 +68,9 @@ void DynamixelInterfaceImpl::endTransaction(DynamixelStatus status)
 	// if (status == 99) mgos_msleep(10);
 	// else if (status != DYN_STATUS_OK) mgos_msleep(2);
 	// writeMode(); // sometimes after uart recongf it send trash byte
+    mUartUserCb_enabled = true;
 	mgos_uart_configure(mUARTno, &mUartCfgSaved); // ...
-	// mgos_usleep(150);  // and we throw it to dxl
-	// readMode();
+
 }
 
 
@@ -250,7 +248,7 @@ void DynamixelInterfaceImpl::setUserUartDispatcherCB(userUartCb_t callback,
 
 void DynamixelInterfaceImpl::uartUserCb(uint16_t len, uint8_t *data)
 {
-    if (mUserUartDispatcherCb != NULL) {
+    if (mUserUartDispatcherCb != NULL && mUartUserCb_enabled == true) {
         mUserUartDispatcherCb(len, data, mUserData_p); 
     }
 }

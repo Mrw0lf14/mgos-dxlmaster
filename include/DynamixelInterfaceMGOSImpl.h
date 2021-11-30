@@ -126,6 +126,7 @@ class DynamixelInterfaceImpl:public DynamixelInterface
         void uartUserCb(uint16_t len, uint8_t *data);
 
 		userUartCb_t mUserUartDispatcherCb = NULL;
+        bool mUartUserCb_enabled = true;
         void *mUserData_p = NULL;
 };
 
