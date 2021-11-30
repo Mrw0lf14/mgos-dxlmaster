@@ -3,7 +3,7 @@
 #define DXL_DIR_TXD_PIN 5
 #define DXL_DIR_RXD_PIN 5
 #define UART_0 0
-#define READ_TIMEOUT 50
+#define READ_TIMEOUT 100
 #define READ_TIMEOUT_SLEEP 100
 
 HardwareDynamixelInterface DxlMaster(UART_0);
