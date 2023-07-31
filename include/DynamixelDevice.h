@@ -9,7 +9,7 @@
 #ifndef DYNAMIXELDEVICE_H_
 #define DYNAMIXELDEVICE_H_
 
-#include "DynamixelInterface.h"
+#include "DynamixelInterface2.h"
 //#include <HardwareSerial.h>
 
 

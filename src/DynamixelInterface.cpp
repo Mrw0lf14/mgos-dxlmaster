@@ -1,4 +1,4 @@
-#include "DynamixelInterface.h"
+#include "DynamixelInterface2.h"
 #include "mgos.h"
 #include "mgos_uart.h"
 

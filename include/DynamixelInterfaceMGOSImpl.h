@@ -1,7 +1,7 @@
 #ifndef DYNAMIXEL_INTERFACE_IMPL_H
 #define DYNAMIXEL_INTERFACE_IMPL_H
 
-#include "DynamixelInterface.h"
+#include "DynamixelInterface2.h"
 #include <stdio.h>
 
 #include "mgos.h"

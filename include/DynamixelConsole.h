@@ -2,7 +2,7 @@
 #define DYNAMIXEL_CONSOLE_H
 
 #include "mgos.h"
-#include "DynamixelInterface.h"
+#include "DynamixelInterface2.h"
 
 #define UART_0 0
 
@@ -49,6 +49,7 @@ class Stream
 
 };
 
+class Stream;
 class DynamixelConsole
 {
 	public:
