@@ -4,7 +4,7 @@
 #include "mgos.h"
 
 #ifdef __cplusplus
-#include "DxlMaster.h"
+#include "DxlMaster2.h"
 #include "DynamixelConsole.h"
 #else
 typedef struct DynamixelDeviceTag DynamixelDevice;
