@@ -19,7 +19,7 @@
 #define BROADCAST_ID 0xFE
 
 #define NO_ADDRESS  0xFFFF
-#define NO_DATA     0xFFFF
+//#define NO_DATA     0xFFFF
 
 #define HEADERS_LEN  4
 #define ID_LEN       1
@@ -195,6 +195,7 @@ enum DynStatus
 	DYN_STATUS_INSTRUCTION_ERROR	= 64,
 
 	DYN_STATUS_TIMEOUT			    = 1,
+	DYN_STATUS_SOFT_ERROR			= 64 + 4,
 	DYN_STATUS_COM_ERROR			= 128,
 	DYN_STATUS_INTERNAL_ERROR		= 255
 };
