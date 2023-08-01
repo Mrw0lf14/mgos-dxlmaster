@@ -28,11 +28,15 @@ class DynamixelDevice
 		
 		void setStatus(uint8_t new_status) { mStatus = new_status; }
 
+	    void protocolVersion(uint8_t version) { mVer = version; };
+    	uint8_t protocolVersion(void) {	return mVer; }
 
 		uint8_t statusReturnLevel();
 		void statusReturnLevel(uint8_t aSRL);
+
 		uint16_t model();
 		uint8_t firmware();
+		
 		void communicationSpeed(uint32_t aSpeed);
 	
 		template<class T>
@@ -84,7 +88,7 @@ class DynamixelDevice
 		}
 
 		uint8_t mVer;
-		
+
 	private:
 		DynamixelID mID;
 		uint8_t mStatusReturnLevel;
