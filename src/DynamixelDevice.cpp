@@ -7,7 +7,7 @@
 #include"DynamixelDevice.h"
 
 DynamixelDevice::DynamixelDevice(DynamixelID aID, uint8_t aVersion)
-    : mID(aID), mStatusReturnLevel(255)
+    : mID(aID), mVer(aVersion), mStatusReturnLevel(255)
 {
     mStatus = DYN_STATUS_OK;
     if (mID == BROADCAST_ID)
