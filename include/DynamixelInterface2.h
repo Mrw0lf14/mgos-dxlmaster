@@ -1,5 +1,5 @@
-#ifndef DYNAMIXEL_INTERFACE_H
-#define DYNAMIXEL_INTERFACE_H
+#ifndef DYNAMIXEL_INTERFACE_V2_H
+#define DYNAMIXEL_INTERFACE_V2_H
 
 #include "Dynamixel.h"
 
@@ -65,14 +65,20 @@ class DynamixelInterface
 							  uint8_t aSize, 
 							  const uint8_t *aPtr, 
 							  uint8_t aStatusReturnLevel = 2);
-	
+    DynamixelStatus fastSyncRead(uint8_t aVer, uint8_t nID, const uint8_t *aID, uint16_t aAddress, uint16_t aSize, uint8_t *aRxBuf);
+    DynamixelStatus bulkRead(uint8_t aVer, uint8_t nID, const uint8_t *aTxBuf, uint16_t aSize, uint8_t *aRxBuf);
+    DynamixelStatus bulkWrite(uint8_t aVer, uint8_t nID, uint16_t aTxSize, const uint8_t *aTxBuf);
+    
 	DynamixelStatus ping(uint8_t aID);
 
 	DynamixelStatus action(uint8_t aID = BROADCAST_ID, 
 						   uint8_t aStatusReturnLevel = 2);
 
 	DynamixelStatus reset(uint8_t aID, uint8_t aStatusReturnLevel = 2);
-	
+    DynamixelStatus reboot(uint8_t aVer, uint8_t aID, uint8_t aStatusReturnLevel);
+    DynamixelStatus clear(uint8_t aVer, uint8_t aID, uint16_t aTxSize, const uint8_t *aTxBuf, uint8_t aStatusReturnLevel = 2);
+    DynamixelStatus backup(uint8_t aVer, uint8_t aID, uint16_t aTxSize, const uint8_t *aTxBuf, uint8_t aStatusReturnLevel = 2);
+
 private:
 	DynamixelPacket mPacket;
 	DynamixelPacket2 mPacket2;
