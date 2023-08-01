@@ -16,8 +16,11 @@ class DynamixelInterface
 	virtual uint8_t prepareTransaction()=0;
 	virtual void endTransaction(DynamixelStatus status)=0;
 	virtual void end()=0;
+
 	void transaction(bool aExpectStatus, uint8_t answerSize = 0);
-	
+    void transaction2(bool aExpectStatus, uint16_t answerSize = 0);
+    void transaction2_loop(uint16_t count, uint16_t answerSize);
+
 	// sizeof(T) must be lower than DYN_INTERNAL_BUFFER_SIZE, 
 	// and in any case lower than 256
 	template<class T>
@@ -70,8 +73,9 @@ class DynamixelInterface
 
 	DynamixelStatus reset(uint8_t aID, uint8_t aStatusReturnLevel = 2);
 	
-	private:
+private:
 	DynamixelPacket mPacket;
+	DynamixelPacket2 mPacket2;
 };
 
 template<class T>
