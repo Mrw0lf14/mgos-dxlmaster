@@ -74,6 +74,12 @@ class DynamixelInterfaceImpl:public DynamixelInterface
 		void begin(long unsigned int aBaud);
 
 		/**
+	     * \brief Change timeOut
+	     * \param[in] timeOut : ms
+	     */
+	    void setTimeOut(uint16_t timeOut);
+
+		/**
 		 * \brief Hardware specific preparations before transaction
 		 * \param[in] aBaud : Baudrate
 		 *
@@ -100,6 +106,14 @@ class DynamixelInterfaceImpl:public DynamixelInterface
 		*/
 		void sendPacket(const DynamixelPacket &aPacket);
 
+        /**
+	     * \brief Send a packet on bus
+	     * \param[in] aPacket : Packet to send
+	     *
+	     * The function wait for the packet to be completly sent (using Stream.flush)
+	     */
+	    void sendPacket2(DynamixelPacket2 &aPacket);
+
 		/**
 		 * \brief Receive a packet on bus
 		 * \param[out] aPacket : Received packet. mData field must 
@@ -113,6 +127,17 @@ class DynamixelInterfaceImpl:public DynamixelInterface
 		 * checksum error, ...)
 		*/
 		void receivePacket(DynamixelPacket &aPacket, uint8_t answerSize = 0);
+
+        /**
+	     * \brief Receive a packet on bus
+	     * \param[out] aPacket : Received packet. mData field must be previously allocated
+	     * \param[in] answerSize : the size of the memory allocated to the mData field
+	     *
+	     * The function wait for a new packet on the bus.
+	     * Timeout depends of timeout of the underlying stream.
+	     * Return error code in case of communication error (timeout, checksum error, ...)
+	     */
+	    void receivePacket2(DynamixelPacket2 &aPacket, uint16_t answerSize = 0 , uint8_t mode = RECEIVE_NORMAL);
 
 		/**
          * \brief Stop interface
