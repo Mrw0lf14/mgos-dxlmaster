@@ -43,12 +43,12 @@ class DynamixelDevice
 		template<class T>
 		inline DynamixelStatus read(uint8_t aAddress, T& aData)
 		{
-			return mStatus = DxlMaster.read<T>(mID, aAddress, aData, mStatusReturnLevel);
+			return mStatus = DxlMaster.read<T>(mVer, mID, aAddress, aData, mStatusReturnLevel);
 		}
 		
 		inline DynamixelStatus read(uint8_t aAddress, uint8_t size, uint8_t *ptr)
 		{
-			return mStatus = DxlMaster.read(mID, aAddress, size, ptr, mStatusReturnLevel);
+			return mStatus = DxlMaster.read(mVer, mID, aAddress, size, ptr, mStatusReturnLevel);
 		}
 		
 		template<class T>
