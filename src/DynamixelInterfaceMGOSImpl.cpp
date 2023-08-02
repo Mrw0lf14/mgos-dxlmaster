@@ -187,7 +187,7 @@ void DynamixelInterfaceImpl::receivePacket(DynamixelPacket &aPacket,
 	}
 }
 
-void DynamixelInterfaceImpl::receivePacket2(DynamixelPacket2 &aPacket, uint16_t answerSize, uint8_t mode);
+void DynamixelInterfaceImpl::receivePacket2(DynamixelPacket2 &aPacket, uint16_t answerSize, uint8_t mode)
 {
 	uint8_t buffer[8] = {0};
 
