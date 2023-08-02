@@ -187,6 +187,52 @@ void DynamixelInterfaceImpl::receivePacket(DynamixelPacket &aPacket,
 	}
 }
 
+void DynamixelInterfaceImpl::receivePacket2(DynamixelPacket2 &aPacket, 
+											uint8_t answerSize)
+{
+	uint8_t buffer[8] = {0};
+
+	if (dxlRead(buffer, 8) < 8) {
+		aPacket.mStatus = DYN_STATUS_COM_ERROR | DYN_STATUS_TIMEOUT;
+		return;
+	}
+	/* Check headers (0xFF 0xFF 0xFD 0x00) */
+	if (buffer[0] != 255 || buffer[1] != 255 || buffer[2] != 253 || buffer[3] != 0) {
+		aPacket.mStatus = DYN_STATUS_COM_ERROR;
+		return;
+	}
+	
+	/* Check ID */
+	if (aPacket.mID != buffer[4]) {
+		aPacket.mStatus = DYN_STATUS_COM_ERROR;
+		return;
+	}
+	/* Check Length */
+	aPacket.mRxDataLength = (uint16_t) (buffer[5] || (buffer[6] << 8));
+	if ((aPacket.mRxDataLength - 2) != answerSize) {
+		aPacket.mStatus = DYN_STATUS_COM_ERROR;
+		return;
+	}
+
+	aPacket.mStatus = buffer[7];
+	
+	if ((aPacket.mRxDataLength > 3) 
+		&& (int)dxlRead(aPacket.mRxData, aPacket.mRxDataLength - 3) 
+						< (aPacket.mLength - 3)) {
+		aPacket.mStatus = DYN_STATUS_COM_ERROR | DYN_STATUS_TIMEOUT;
+		return;
+	}
+
+	if (dxlRead((uint8_t*)(&(aPacket.mCheckSum)), 2) < 1) {
+		aPacket.mStatus = DYN_STATUS_COM_ERROR | DYN_STATUS_TIMEOUT;
+		return;
+	} 
+	
+
+	if (aPacket.checkSum() != aPacket.mCheckSum) {
+		aPacket.mStatus = DYN_STATUS_COM_ERROR | DYN_STATUS_CHECKSUM_ERROR;
+	}
+}
 
 void DynamixelInterfaceImpl::readMode()
 {
