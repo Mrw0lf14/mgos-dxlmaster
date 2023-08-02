@@ -26,11 +26,7 @@ class DynamixelInterface
 	// sizeof(T) must be lower than DYN_INTERNAL_BUFFER_SIZE, 
 	// and in any case lower than 256
 	template<class T>
-	inline DynamixelStatus read(uint8_t aVer,
-								uint8_t aID, 
-								uint16_t aAddress, 
-								const T& aData, 
-								uint8_t aStatusReturnLevel = 2);
+	inline DynamixelStatus readread(uint8_t aID, uint16_t aAddress, uint16_t aSize, uint8_t *aData, uint8_t aStatusReturnLevel = 2);
 
 	template<class T>
 	inline DynamixelStatus write(uint8_t aID, 
