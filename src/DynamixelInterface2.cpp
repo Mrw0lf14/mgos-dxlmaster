@@ -19,6 +19,22 @@ void DynamixelInterface::transaction(bool aExpectStatus, uint8_t answerSize)
 	endTransaction(mPacket.mStatus);
 }
 
+void DynamixelInterface::transaction2(bool aExpectStatus, uint16_t answerSize)
+{
+    if (prepareTransaction() != 0) {
+		mPacket2.mStatus = DYN_STATUS_SOFT_ERROR;
+		return;
+	}
+    sendPacket2(mPacket2);
+
+    if (aExpectStatus)
+        receivePacket2(mPacket2, answerSize);
+    else
+        mPacket2.mStatus = DYN2_STATUS_OK;
+
+    endTransaction(mPacket.mStatus);
+}
+
 DynamixelStatus DynamixelInterface::read(uint8_t aID, uint8_t aAddress, uint8_t aSize, uint8_t *aPtr, uint8_t aStatusReturnLevel)
 {
 	mPacket = DynamixelPacket(aID, DYN_READ, 4, aPtr, aAddress, aSize);
