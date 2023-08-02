@@ -76,6 +76,7 @@ class DynamixelConsole
 	char mLineBuf[sLineBufSize + 1];
 	char *mLinePtr;
 	Stream mConsole;
+	uint8_t mVer;
 	
 	const static DynamixelCommand sCommand[];
 };

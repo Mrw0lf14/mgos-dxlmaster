@@ -13,6 +13,7 @@ class DynamixelInterface
 	virtual void begin(unsigned long aBaud)=0;
 	virtual void sendPacket(const DynamixelPacket &aPacket)=0;
 	virtual void receivePacket(DynamixelPacket &aPacket, uint8_t answerSize = 0)=0;
+	virtual void sendPacket2(DynamixelPacket2 &aPacket) = 0;
 	virtual uint8_t prepareTransaction()=0;
 	virtual void endTransaction(DynamixelStatus status)=0;
 	virtual void end()=0;

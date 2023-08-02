@@ -23,6 +23,7 @@ class DynamixelDevice
 		
 		DynamixelStatus init();
 		DynamixelStatus status() {	return mStatus;	}
+		
 		DynamixelID id() { return mID; }
 		DynamixelStatus changeId(uint8_t id);
 		
