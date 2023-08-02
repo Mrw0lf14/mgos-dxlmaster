@@ -27,7 +27,7 @@ class DynamixelInterface
 	// and in any case lower than 256
 
 	template <class T>
-    inline DynamixelStatus read(uint8_t aVer, uint8_t aID,  uint16_t aAddress, T& aData, uint8_t aStatusReturnLevel = 2);
+    inline DynamixelStatus read(uint8_t aVer, uint8_t aID, uint16_t aAddress, T& aData, uint8_t aStatusReturnLevel = 2);
 
 	template<class T>
 	inline DynamixelStatus readread(uint8_t aID, uint16_t aAddress, uint16_t aSize, uint8_t *aData, uint8_t aStatusReturnLevel = 2);
@@ -44,11 +44,11 @@ class DynamixelInterface
 									const T& aData, 
 									uint8_t aStatusReturnLevel = 2);
 	
-	DynamixelStatus read(uint8_t aVer,
+	DynamixelStatus read(uint8_t aVer, 
 						 uint8_t aID, 
 						 uint16_t aAddress, 
-						 uint16_t aSize, 
-						 uint8_t *aPtr, 
+						 uint16_t aRxSize, 
+						 uint8_t *aRxBuf, 
 						 uint8_t aStatusReturnLevel = 2);
 
 	DynamixelStatus write(uint8_t aID, 
