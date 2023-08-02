@@ -35,11 +35,36 @@ void DynamixelInterface::transaction2(bool aExpectStatus, uint16_t answerSize)
     endTransaction(mPacket.mStatus);
 }
 
-DynamixelStatus DynamixelInterface::read(uint8_t aID, uint8_t aAddress, uint8_t aSize, uint8_t *aPtr, uint8_t aStatusReturnLevel)
+/**
+ *  Read (0x02)
+ */
+DynamixelStatus DynamixelInterface::read(
+    uint8_t aVer, 
+    uint8_t aID, 
+    uint16_t aAddress, 
+    uint16_t aRxSize, 
+    uint8_t *aRxBuf, 
+    uint8_t aStatusReturnLevel)
 {
-	mPacket = DynamixelPacket(aID, DYN_READ, 4, aPtr, aAddress, aSize);
-	transaction(aStatusReturnLevel > 0 && aID != BROADCAST_ID, aSize);
-	return mPacket.mStatus;
+    if (aVer == DYN_PROTOCOL_V1) 
+    {
+        mPacket = DynamixelPacket(aID, DYN_READ, 4, aRxBuf, (uint8_t)aAddress, (uint8_t)aRxSize);
+        transaction(aStatusReturnLevel > 0 && aID != BROADCAST_ID, aRxSize);
+        return mPacket.mStatus;
+    }
+    else
+    {
+        uint8_t *params = (uint8_t *) malloc(READ_TX_PARAMS_LEN);
+        params[0] = (DXL_LOBYTE(aAddress));
+        params[1] = (DXL_HIBYTE(aAddress));
+        params[2] = (DXL_LOBYTE(aRxSize));
+        params[3] = (DXL_HIBYTE(aRxSize));
+
+        mPacket2 = DynamixelPacket2(aID, READ_TX_LENGTH, INST_READ, params, READ_TX_PARAMS_LEN, /*aAddress,*/ aRxBuf, aRxSize);
+        transaction2(aStatusReturnLevel > 0 && aID != BROADCAST_ID, READ_RX_LENGTH + aRxSize);
+        free(params);
+        return mPacket2.mStatus;
+    }
 }
 
 DynamixelStatus DynamixelInterface::write(uint8_t aID, uint8_t aAddress, uint8_t aSize, const uint8_t *aPtr, uint8_t aStatusReturnLevel)

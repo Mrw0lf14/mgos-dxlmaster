@@ -26,9 +26,11 @@ class DynamixelInterface
 	// sizeof(T) must be lower than DYN_INTERNAL_BUFFER_SIZE, 
 	// and in any case lower than 256
 	template<class T>
-	inline DynamixelStatus read(uint8_t aID, 
-								uint8_t aAddress, 
-								T& aData, 
+	inline DynamixelStatus read(uint8_t aVer, 
+    							uint8_t aID, 
+								uint16_t aAddress, 
+								uint16_t aRxSize, 
+								uint8_t *aRxBuf, 
 								uint8_t aStatusReturnLevel = 2);
 
 	template<class T>
@@ -43,9 +45,10 @@ class DynamixelInterface
 									const T& aData, 
 									uint8_t aStatusReturnLevel = 2);
 	
-	DynamixelStatus read(uint8_t aID, 
-						 uint8_t aAddress, 
-						 uint8_t aSize, 
+	DynamixelStatus read(uint8_t mVer,
+						 uint8_t aID, 
+						 uint16_t aAddress, 
+						 uint16_t aSize, 
 						 uint8_t *aPtr, 
 						 uint8_t aStatusReturnLevel = 2);
 
@@ -67,6 +70,7 @@ class DynamixelInterface
 							  uint8_t aSize, 
 							  const uint8_t *aPtr, 
 							  uint8_t aStatusReturnLevel = 2);
+
     DynamixelStatus fastSyncRead(uint8_t aVer, uint8_t nID, const uint8_t *aID, uint16_t aAddress, uint16_t aSize, uint8_t *aRxBuf);
     DynamixelStatus bulkRead(uint8_t aVer, uint8_t nID, const uint8_t *aTxBuf, uint16_t aSize, uint8_t *aRxBuf);
     DynamixelStatus bulkWrite(uint8_t aVer, uint8_t nID, uint16_t aTxSize, const uint8_t *aTxBuf);
@@ -87,9 +91,9 @@ private:
 };
 
 template<class T>
-DynamixelStatus DynamixelInterface::read(uint8_t aID, uint8_t aAddress, T& aData, uint8_t aStatusReturnLevel)
+DynamixelStatus DynamixelInterface::read(uint8_t mVer, mVeruint8_t aID, uint16_t aAddress, T& aData, uint8_t aStatusReturnLevel)
 {
-	return read(aID, aAddress, uint8_t(sizeof(T)), (uint8_t*)&aData, aStatusReturnLevel);
+	return read(mVer, aID, aAddress, uint8_t(sizeof(T)), (uint8_t*)&aData, aStatusReturnLevel);
 }
 
 template<class T>
