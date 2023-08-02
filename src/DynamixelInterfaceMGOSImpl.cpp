@@ -118,6 +118,23 @@ void DynamixelInterfaceImpl::sendPacket(const DynamixelPacket &aPacket)
 	readMode();
 }
 
+void DynamixelInterfaceImpl::sendPacket2(DynamixelPacket2 &aPacket)
+{
+	// empty receive buffer, in case of a error in previous transaction
+	uint8_t dummy;
+	while (mgos_uart_read_avail(mUARTno)) {
+		mgos_uart_read(mUARTno, (void *) &dummy, 1);
+	}
+
+	writeMode();
+	dxlWrite(aPacket.mHead, 8);
+	dxlWrite(aPacket.mParams, aPacket.mParamSize);
+
+	dxlWrite((uint8_t)(aPacket.mCheckSum && 0xFF));
+	dxlWrite((uint8_t)(aPacket.mCheckSum >> 8));
+	mgos_uart_flush(mUARTno);
+	readMode();
+}
 
 void DynamixelInterfaceImpl::receivePacket(DynamixelPacket &aPacket, 
 											uint8_t answerSize)
