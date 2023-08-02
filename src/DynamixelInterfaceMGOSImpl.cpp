@@ -182,7 +182,7 @@ void DynamixelInterfaceImpl::receivePacket(DynamixelPacket &aPacket,
 	} 
 	
 
-	if (aPacket.checkSum() != aPacket.mCheckSum) {
+	if (aPacket.updateCRC() != aPacket.mCheckSum) {
 		aPacket.mStatus = DYN_STATUS_COM_ERROR | DYN_STATUS_CHECKSUM_ERROR;
 	}
 }
@@ -217,7 +217,7 @@ void DynamixelInterfaceImpl::receivePacket2(DynamixelPacket2 &aPacket, uint16_t 
 	
 	if ((aPacket.mRxDataLength > 3) 
 		&& (int)dxlRead(aPacket.mRxData, aPacket.mRxDataLength - 3) 
-						< (aPacket.mLength - 3)) {
+						< (aPacket.mRxDataLength - 3)) {
 		aPacket.mStatus = DYN_STATUS_COM_ERROR | DYN_STATUS_TIMEOUT;
 		return;
 	}
