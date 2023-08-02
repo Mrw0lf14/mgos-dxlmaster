@@ -182,7 +182,7 @@ void DynamixelInterfaceImpl::receivePacket(DynamixelPacket &aPacket,
 	} 
 	
 
-	if (aPacket.updateCRC() != aPacket.mCheckSum) {
+	if (aPacket.checkSum() != aPacket.mCheckSum) {
 		aPacket.mStatus = DYN_STATUS_COM_ERROR | DYN_STATUS_CHECKSUM_ERROR;
 	}
 }
@@ -207,7 +207,7 @@ void DynamixelInterfaceImpl::receivePacket2(DynamixelPacket2 &aPacket, uint16_t 
 		return;
 	}
 	/* Check Length */
-	aPacket.mRxDataLength = (uint16_t) (buffer[5] || (buffer[6] << 8));
+	aPacket.mRxDataLength = (uint16_t) (buffer[5] + (buffer[6] << 8));
 	if ((aPacket.mRxDataLength - 2) != answerSize) {
 		aPacket.mStatus = DYN_STATUS_COM_ERROR;
 		return;
@@ -228,9 +228,9 @@ void DynamixelInterfaceImpl::receivePacket2(DynamixelPacket2 &aPacket, uint16_t 
 	} 
 	
 
-	if (aPacket.checkSum() != aPacket.mCheckSum) {
-		aPacket.mStatus = DYN_STATUS_COM_ERROR | DYN_STATUS_CHECKSUM_ERROR;
-	}
+	// if (aPacket.checkSum() != aPacket.mCheckSum) {
+	// 	aPacket.mStatus = DYN_STATUS_COM_ERROR | DYN_STATUS_CHECKSUM_ERROR;
+	// }
 }
 
 void DynamixelInterfaceImpl::readMode()
