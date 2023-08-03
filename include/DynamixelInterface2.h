@@ -33,10 +33,7 @@ class DynamixelInterface
 	inline DynamixelStatus write(uint8_t aVer, uint8_t aID, uint16_t aAddress, const T& aData, uint8_t aStatusReturnLevel = 2);
 
 	template<class T>
-	inline DynamixelStatus regWrite(uint8_t aID, 
-									uint8_t aAddress, 
-									const T& aData, 
-									uint8_t aStatusReturnLevel = 2);
+	inline DynamixelStatus regWrite(uint8_t aVer, uint8_t aID, uint16_t aAddress, uint16_t aTxSize, const uint8_t *aTxBuf, uint8_t aStatusReturnLevel = 2);
 	
 	inline DynamixelStatus read(uint8_t aID, uint16_t aAddress, uint16_t aSize, uint8_t *aData, uint8_t aStatusReturnLevel = 2);
 	inline DynamixelStatus write(uint8_t aID, uint16_t aAddress, uint8_t aSize, uint8_t *aData, uint8_t aStatusReturnLevel = 2);
@@ -56,10 +53,11 @@ class DynamixelInterface
 						const uint8_t *aTxBuf,
 						uint8_t aStatusReturnLevel = 2);
 
-	DynamixelStatus regWrite(uint8_t aID, 
-							 uint8_t aAddress, 
-							 uint8_t aSize, 
-							 const uint8_t *aPtr, 
+	DynamixelStatus regWrite(uint8_t aVer, 
+							 uint8_t aID, 
+							 uint16_t aAddress,
+							 uint16_t aTxSize,
+							 const uint8_t *aTxBuf,
 							 uint8_t aStatusReturnLevel=2);
 
 	DynamixelStatus syncRead(uint8_t aVer, uint8_t nID, const uint8_t *aID, uint16_t aAddress, uint16_t aSize, uint8_t *aRxBuf);
@@ -96,9 +94,9 @@ DynamixelStatus DynamixelInterface::write(uint8_t aVer, uint8_t aID, uint16_t aA
 	return write(aVer, aID, aAddress, uint8_t(sizeof(T)), (const uint8_t*)&aData, aStatusReturnLevel);
 }
 template<class T>
-DynamixelStatus DynamixelInterface::regWrite(uint8_t aID, uint8_t aAddress, const T& aData, uint8_t aStatusReturnLevel)
+DynamixelStatus DynamixelInterface::regWrite(uint8_t aVer, uint8_t aID, uint16_t aAddress, const T& aData, uint8_t aStatusReturnLevel)
 {
-	return regWrite(aID, aAddress, uint8_t(sizeof(T)), (const uint8_t*)&aData, aStatusReturnLevel);
+	return regWrite(aVer, aID, aAddress, uint16_t(sizeof(T)), (const uint8_t *)&aData, aStatusReturnLevel);
 }
 
 inline DynamixelStatus DynamixelInterface::read(uint8_t aID, uint16_t aAddress, uint16_t aSize, uint8_t *aData, uint8_t aStatusReturnLevel)
