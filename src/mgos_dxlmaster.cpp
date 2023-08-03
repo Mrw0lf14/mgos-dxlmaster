@@ -112,7 +112,7 @@ DynamixelStatus mgos_dxl_write16(DynamixelDevice *module,
 /******************************************************************************/
 uint8_t mgos_dxl_direct_ping(uint8_t id)
 {
-    return DxlMaster.ping(id);
+    return DxlMaster.ping(DxlMaster.mVer, id);
 }
 
 void mgos_dxl_direct_begin(uint32_t baud)

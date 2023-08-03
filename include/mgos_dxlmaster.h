@@ -19,7 +19,7 @@ extern "C" {
 #endif
 
 
-DynamixelDevice *mgos_dxl_module_create(int model_id);
+DynamixelDevice *mgos_dxl_module_create(int model_id, int ver = 1);
 void mgos_dxl_master_begin(uint32_t baud);
 void mgos_dxl_master_enable(uint8_t state);
 DynamixelStatus mgos_dxl_init(DynamixelDevice *module);
