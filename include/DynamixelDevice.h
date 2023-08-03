@@ -54,12 +54,12 @@ class DynamixelDevice
 		template<class T>
 		inline DynamixelStatus write(uint8_t aAddress, const T& aData)
 		{
-			return mStatus = DxlMaster.write<T>(mID, aAddress, aData, mStatusReturnLevel);
+			return mStatus = DxlMaster.write<T>(mVer, mID, aAddress, aData, mStatusReturnLevel);
 		}
 		
 		inline DynamixelStatus write(uint8_t aAddress, uint8_t size, const uint8_t *ptr)
 		{
-			return mStatus = DxlMaster.write(mID, aAddress, size, ptr, mStatusReturnLevel);
+			return mStatus = DxlMaster.write(mVer, mID, aAddress, size, ptr, mStatusReturnLevel);
 		}
 		
 		template<class T>
