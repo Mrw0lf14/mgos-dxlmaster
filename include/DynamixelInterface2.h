@@ -44,7 +44,7 @@ class DynamixelInterface
 	
 	inline DynamixelStatus read(uint8_t aID, uint16_t aAddress, uint16_t aSize, uint8_t *aData, uint8_t aStatusReturnLevel = 2);
 	inline DynamixelStatus write(uint8_t aID, uint16_t aAddress, uint8_t aSize, uint8_t *aData, uint8_t aStatusReturnLevel = 2);
-
+	
 	DynamixelStatus read(uint8_t aVer, 
 						 uint8_t aID, 
 						 uint16_t aAddress, 
@@ -52,12 +52,13 @@ class DynamixelInterface
 						 uint8_t *aRxBuf, 
 						 uint8_t aStatusReturnLevel = 2);
 
-	DynamixelStatus write(uint8_t aVer,
-						  uint8_t aID, 
-						  uint16_t aAddress, 
-						  uint16_t aTxSize, 
-						  const uint8_t *aTxBuf, 
-						  uint8_t aStatusReturnLevel = 2);
+	DynamixelStatus write(
+						uint8_t aVer, 
+						uint8_t aID, 
+						uint16_t aAddress,
+						uint16_t aTxSize,
+						const uint8_t *aTxBuf,
+						uint8_t aStatusReturnLevel = 2);
 
 	DynamixelStatus regWrite(uint8_t aID, 
 							 uint8_t aAddress, 
