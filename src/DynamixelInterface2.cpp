@@ -135,12 +135,7 @@ DynamixelStatus DynamixelInterface::regWrite(
     }
 }
 
-DynamixelStatus DynamixelInterface::syncWrite(uint8_t nID, const uint8_t *aID, uint8_t aAddress, uint8_t aSize, const uint8_t *aPtr, uint8_t aStatusReturnLevel)
-{
-	mPacket=DynamixelPacket(BROADCAST_ID, DYN_SYNC_WRITE, (aSize+1)*nID+4, aPtr, aAddress, aSize, nID, aID);
-	transaction(false);
-	return mPacket.mStatus;
-}
+
 
 DynamixelStatus DynamixelInterface::ping(uint8_t aID)
 {
@@ -205,7 +200,50 @@ DynamixelStatus DynamixelInterface::syncRead(
             receivePacket2(xxx, SYNC_READ_RX_LENGTH + aSize);
         }
     
-        endTransaction();
+        endTransaction(mPacket.mStatus);
+        free(params);
+        return mPacket2.mStatus;
+
+    }
+
+}
+
+/**
+ *  Sync Write (0x83)
+ */
+DynamixelStatus DynamixelInterface::syncWrite(
+    uint8_t aVer, 
+    uint8_t nID, 
+    const uint8_t *aID,
+    uint16_t aAddress, 
+    uint16_t aSize,
+    const uint8_t *aTxBuf)
+{
+    if (aVer == DYN_PROTOCOL_V1)
+    {   	
+        mPacket = DynamixelPacket(BROADCAST_ID, DYN_SYNC_WRITE, (aSize + 1) * nID + 4, aTxBuf, aAddress, aSize, nID, aID);
+        transaction(false);
+        return mPacket.mStatus;
+    }
+    else
+    {
+        uint16_t params_size = SYNC_WRITE_TX_PARAMS_LEN + nID * aSize;
+        uint8_t *params = (uint8_t *)malloc(params_size);
+        params[0] = (DXL_LOBYTE(aAddress));
+        params[1] = (DXL_HIBYTE(aAddress));
+        params[2] = (DXL_LOBYTE(aSize));
+        params[3] = (DXL_HIBYTE(aSize));
+        
+        uint8_t offset = 1 + aSize; // id + bytes
+        for (size_t i = 0; i < nID; i++)
+        {
+            params[SYNC_WRITE_TX_PARAMS_LEN + i * offset] = aID[i];
+            memcpy(&params[SYNC_WRITE_TX_PARAMS_LEN + i * offset + 1], &aTxBuf[i * aSize],  aSize);
+        }
+        
+        mPacket2 = DynamixelPacket2(BROADCAST_ID, SYNC_WRITE_TX_PARAMS_LEN + nID * aSize, INST_SYNC_WRITE, params, params_size);
+
+        transaction2(false);
         free(params);
         return mPacket2.mStatus;
 
