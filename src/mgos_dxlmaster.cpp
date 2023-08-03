@@ -128,7 +128,7 @@ uint8_t mgos_dxl_direct_read(uint8_t id, uint8_t reg,
 
 uint8_t mgos_dxl_direct_write_byte(uint8_t id, uint8_t reg, uint8_t byte) 
 {
-    return DxlMaster.write(id, reg, byte);
+    return DxlMaster.write(id, reg, 1, &byte);
 }
 
 uint8_t mgos_dxl_direct_write(uint8_t id, uint8_t reg, 
