@@ -184,20 +184,18 @@ void DynamixelConsole::printHelp()
 
 DynamixelStatus DynamixelConsole::ping(int argc, char **argv)
 {
-	int id = 0;
-
-	if (argc < 2) {
-		mConsole.print("Usage : ping <id>\n\r");
-		return DYN_STATUS_INTERNAL_ERROR;
-	}
-
-	id = atoi(argv[1]);
-
-	if (id > 254) {
-		return DYN_STATUS_INTERNAL_ERROR;
-	}
-
-	return DxlMaster.ping(id);
+    int id = 0;
+    if (argc < 2)
+    {
+        mConsole.print("Usage : ping <id>\n\r");
+        return DYN_STATUS_INTERNAL_ERROR;
+    }
+    id = atoi(argv[1]);
+    if (id > 254)
+    {
+        return DYN_STATUS_INTERNAL_ERROR;
+    }
+    return DxlMaster.ping(mVer, id);
 }
 
 DynamixelStatus DynamixelConsole::read(int argc, char **argv)

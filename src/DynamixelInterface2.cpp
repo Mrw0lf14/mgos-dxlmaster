@@ -137,11 +137,29 @@ DynamixelStatus DynamixelInterface::regWrite(
 
 
 
-DynamixelStatus DynamixelInterface::ping(uint8_t aID)
+/**
+ *  Ping (0x01)
+ */
+DynamixelStatus DynamixelInterface::ping(uint8_t aVer, uint8_t aID, uint8_t *rxBuf)
 {
-	mPacket = DynamixelPacket(aID, DYN_PING, 2, NULL);
-	transaction(true);
-	return mPacket.mStatus;
+    if (aVer == DYN_PROTOCOL_V1) 
+    {
+        mPacket = DynamixelPacket(aID, DYN_PING, 2, NULL);
+        transaction(true);
+        return mPacket.mStatus;
+    }
+    else 
+    {
+        uint8_t temp[PING_RX_PARAMS_LEN]; // For comp with old code without rx buf pointer
+        if (rxBuf == NULL) 
+            rxBuf = temp;
+        
+        mPacket2 = DynamixelPacket2(aID, PING_TX_LENGTH, INST_PING);
+        mPacket2.mRxData = rxBuf;
+        mPacket2.mRxDataLength = PING_RX_PARAMS_LEN;
+        transaction2(true, PING_RX_LENGTH);
+        return mPacket2.mStatus;
+    }
 }
 
 DynamixelStatus DynamixelInterface::action(uint8_t aID, uint8_t aStatusReturnLevel)

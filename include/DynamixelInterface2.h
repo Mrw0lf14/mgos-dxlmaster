@@ -67,7 +67,7 @@ class DynamixelInterface
     DynamixelStatus bulkRead(uint8_t aVer, uint8_t nID, const uint8_t *aTxBuf, uint16_t aSize, uint8_t *aRxBuf);
     DynamixelStatus bulkWrite(uint8_t aVer, uint8_t nID, uint16_t aTxSize, const uint8_t *aTxBuf);
     
-	DynamixelStatus ping(uint8_t aID);
+	DynamixelStatus ping(uint8_t aVer, uint8_t aID, uint8_t *rxBuf = NULL);
 
 	DynamixelStatus action(uint8_t aID = BROADCAST_ID, 
 						   uint8_t aStatusReturnLevel = 2);

@@ -99,9 +99,9 @@ class DynamixelDevice
 	    }
 
 
-		DynamixelStatus ping()
+		DynamixelStatus ping(uint8_t *buf = NULL)
 		{
-			return mStatus = DxlMaster.ping(mID);
+			return mStatus = DxlMaster.ping(mVer, mID, buf);
 		}
 		
 		DynamixelStatus action()
