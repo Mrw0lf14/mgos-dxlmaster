@@ -101,11 +101,38 @@ DynamixelStatus DynamixelInterface::write(
     }
 }
 
-DynamixelStatus DynamixelInterface::regWrite(uint8_t aID, uint8_t aAddress, uint8_t aSize, const uint8_t *aPtr, uint8_t aStatusReturnLevel)
+/**
+ *  Reg Write (0x04)
+ */
+DynamixelStatus DynamixelInterface::regWrite(
+    uint8_t aVer, 
+    uint8_t aID, 
+    uint16_t aAddress,
+    uint16_t aTxSize,
+    const uint8_t *aTxBuf,
+    uint8_t aStatusReturnLevel)
 {
-	mPacket=DynamixelPacket(aID, DYN_REG_WRITE, aSize+3, aPtr, aAddress);
-	transaction(aStatusReturnLevel > 1 && aID != BROADCAST_ID);
-	return mPacket.mStatus;
+    if (aVer == DYN_PROTOCOL_V1)
+    {
+        mPacket = DynamixelPacket(aID, DYN_REG_WRITE, (uint8_t)aTxSize + 3, aTxBuf, (uint8_t)aAddress);
+        transaction(aStatusReturnLevel > 1 && aID != BROADCAST_ID);
+        return mPacket.mStatus;
+    }
+    else
+    {
+        uint16_t params_size = WRITE_TX_PARAMS_LEN + aTxSize;
+        uint8_t *params = (uint8_t *)malloc(params_size);
+        params[0] = (DXL_LOBYTE(aAddress));
+        params[1] = (DXL_HIBYTE(aAddress));
+        
+        memcpy(&params[WRITE_TX_PARAMS_LEN], aTxBuf, aTxSize);
+
+        mPacket2 = DynamixelPacket2(aID, WRITE_TX_LENGTH + aTxSize, INST_REG_WRITE, params, params_size/*, aAddress*/);
+
+        transaction2(aStatusReturnLevel > 0 && aID != BROADCAST_ID, WRITE_RX_LENGTH);
+        free(params);
+        return mPacket2.mStatus;
+    }
 }
 
 DynamixelStatus DynamixelInterface::syncWrite(uint8_t nID, const uint8_t *aID, uint8_t aAddress, uint8_t aSize, const uint8_t *aPtr, uint8_t aStatusReturnLevel)
@@ -136,4 +163,52 @@ DynamixelStatus DynamixelInterface::reset(uint8_t aID, uint8_t aStatusReturnLeve
 	return mPacket.mStatus;
 }
 
+/**
+ *  Sync Read (0x82)
+ */
+DynamixelStatus DynamixelInterface::syncRead(
+    uint8_t aVer, 
+    uint8_t nID, 
+    const uint8_t *aID, 
+    uint16_t aAddress, 
+    uint16_t aSize, 
+    uint8_t *aRxBuf)
+{
+    if (aVer == DYN_PROTOCOL_V1)
+    {
+        return DYN_STATUS_INSTRUCTION_ERROR;
+    }
+    else
+    {
+        uint16_t params_size = SYNC_READ_TX_PARAMS_LEN + nID;
+        uint8_t *params = (uint8_t *)malloc(params_size);
 
+        params[0] = (DXL_LOBYTE(aAddress));
+        params[1] = (DXL_HIBYTE(aAddress));
+        params[2] = (DXL_LOBYTE(aSize));
+        params[3] = (DXL_HIBYTE(aSize));
+        memcpy(&params[SYNC_READ_TX_PARAMS_LEN], aID, nID);
+
+        mPacket2 = DynamixelPacket2(BROADCAST_ID, SYNC_READ_TX_LENGTH + nID, INST_SYNC_READ, params, params_size);
+
+        prepareTransaction();
+
+        sendPacket2(mPacket2);
+
+        for (size_t i = 0; i < nID; i++)
+        {
+            DynamixelPacket2 xxx = DynamixelPacket2(aID[i], 0, 0);
+
+            xxx.mRxDataLength = aSize;
+            xxx.mRxData = &aRxBuf[i * aSize];
+
+            receivePacket2(xxx, SYNC_READ_RX_LENGTH + aSize);
+        }
+    
+        endTransaction();
+        free(params);
+        return mPacket2.mStatus;
+
+    }
+
+}

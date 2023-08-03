@@ -62,12 +62,8 @@ class DynamixelInterface
 							 const uint8_t *aPtr, 
 							 uint8_t aStatusReturnLevel=2);
 
-	DynamixelStatus syncWrite(uint8_t nID, 
-							  const uint8_t *aID, 
-							  uint8_t aAddress, 
-							  uint8_t aSize, 
-							  const uint8_t *aPtr, 
-							  uint8_t aStatusReturnLevel = 2);
+	DynamixelStatus syncRead(uint8_t aVer, uint8_t nID, const uint8_t *aID, uint16_t aAddress, uint16_t aSize, uint8_t *aRxBuf);
+	DynamixelStatus syncWrite(uint8_t aVer, uint8_t nID, const uint8_t *aID, uint16_t aAddress, uint16_t aSize, const uint8_t *aTxBuf);
 
     DynamixelStatus fastSyncRead(uint8_t aVer, uint8_t nID, const uint8_t *aID, uint16_t aAddress, uint16_t aSize, uint8_t *aRxBuf);
     DynamixelStatus bulkRead(uint8_t aVer, uint8_t nID, const uint8_t *aTxBuf, uint16_t aSize, uint8_t *aRxBuf);
