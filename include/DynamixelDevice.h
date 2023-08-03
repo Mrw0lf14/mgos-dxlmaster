@@ -73,6 +73,32 @@ class DynamixelDevice
 			return mStatus = DxlMaster.regWrite(mID, aAddress, size, ptr, mStatusReturnLevel);
 		}
 		
+		inline DynamixelStatus syncRead(uint8_t nID, const uint8_t *aID, uint16_t aAddress, uint16_t aLen, uint8_t *rxPtr)
+	    {
+	        return mStatus = DxlMaster.syncRead(mVer, nID, aID, aAddress, aLen, rxPtr);
+	    }
+
+	    inline DynamixelStatus syncWrite(uint8_t nID, const uint8_t *aID, uint16_t aAddress, uint16_t aSize, const uint8_t *ptr)
+	    {
+	        return mStatus = DxlMaster.syncWrite(mVer, nID, aID, aAddress, aSize, ptr);
+	    }
+
+	    inline DynamixelStatus fastSyncRead(uint8_t nID, const uint8_t *aID, uint16_t aAddress, uint16_t aLen, uint8_t *rxPtr)
+	    {
+	        return mStatus = DxlMaster.fastSyncRead(mVer, nID, aID, aAddress, aLen, rxPtr);
+	    }
+
+	    inline DynamixelStatus bulkRead(uint8_t nID, const uint8_t *aTxBuf, uint16_t aTxBufLen, uint8_t *rxPtr)
+	    {
+	        return mStatus = DxlMaster.bulkRead(mVer, nID, aTxBuf, aTxBufLen, rxPtr);
+	    }
+
+	    inline DynamixelStatus bulkWrite(uint8_t nID, const uint8_t *aTxBuf, uint16_t aSize)
+	    {
+	        return mStatus = DxlMaster.bulkWrite(mVer, nID, aSize, aTxBuf);
+	    }
+
+
 		DynamixelStatus ping()
 		{
 			return mStatus = DxlMaster.ping(mID);
@@ -88,6 +114,21 @@ class DynamixelDevice
 			return mStatus = DxlMaster.reset(mID, mStatusReturnLevel);
 		}
 
+	    DynamixelStatus reboot(void)
+	    {
+	        return mStatus = DxlMaster.reboot(mVer, mID, mStatusReturnLevel);
+	    }
+
+	    DynamixelStatus clear(uint16_t aSize, const uint8_t *aPtr)
+	    {
+	        return mStatus = DxlMaster.clear(mVer, mID, aSize, aPtr, mStatusReturnLevel);
+	    }
+
+	    DynamixelStatus backup(uint16_t size, const uint8_t *ptr)
+	    {
+	        return mStatus = DxlMaster.backup(mVer, mID, size, ptr, mStatusReturnLevel);
+	    }
+	    
 		uint8_t mVer;
 
 	private:
