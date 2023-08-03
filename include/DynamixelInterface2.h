@@ -30,8 +30,9 @@ class DynamixelInterface
     inline DynamixelStatus read(uint8_t aVer, uint8_t aID, uint16_t aAddress, T& aData, uint8_t aStatusReturnLevel = 2);
 
 	template<class T>
-	inline DynamixelStatus write(uint8_t aID, 
-								 uint8_t aAddress, 
+	inline DynamixelStatus write(uint8_t aVer,
+								 uint8_t aID, 
+								 uint16_t aAddress, 
 								 const T& aData, 
 								 uint8_t aStatusReturnLevel = 2);
 
@@ -42,7 +43,8 @@ class DynamixelInterface
 									uint8_t aStatusReturnLevel = 2);
 	
 	inline DynamixelStatus read(uint8_t aID, uint16_t aAddress, uint16_t aSize, uint8_t *aData, uint8_t aStatusReturnLevel = 2);
-	
+	inline DynamixelStatus write(uint8_t aID, uint16_t aAddress, uint8_t aSize, uint8_t *aData, uint8_t aStatusReturnLevel = 2);
+
 	DynamixelStatus read(uint8_t aVer, 
 						 uint8_t aID, 
 						 uint16_t aAddress, 
@@ -50,10 +52,11 @@ class DynamixelInterface
 						 uint8_t *aRxBuf, 
 						 uint8_t aStatusReturnLevel = 2);
 
-	DynamixelStatus write(uint8_t aID, 
-						  uint8_t aAddress, 
-						  uint8_t aSize, 
-						  const uint8_t *aPtr, 
+	DynamixelStatus write(uint8_t aVer,
+						  uint8_t aID, 
+						  uint16_t aAddress, 
+						  uint16_t aTxSize, 
+						  const uint8_t *aTxBuf, 
 						  uint8_t aStatusReturnLevel = 2);
 
 	DynamixelStatus regWrite(uint8_t aID, 
@@ -95,9 +98,9 @@ DynamixelStatus DynamixelInterface::read(uint8_t aVer, uint8_t aID, uint16_t aAd
 }
 
 template<class T>
-DynamixelStatus DynamixelInterface::write(uint8_t aID, uint8_t aAddress, const T& aData, uint8_t aStatusReturnLevel)
+DynamixelStatus DynamixelInterface::write(uint8_t aVer, uint8_t aID, uint16_t aAddress, const T& aData, uint8_t aStatusReturnLevel)
 {
-	return write(aID, aAddress, uint8_t(sizeof(T)), (const uint8_t*)&aData, aStatusReturnLevel);
+	return write(aVer, aID, aAddress, uint8_t(sizeof(T)), (const uint8_t*)&aData, aStatusReturnLevel);
 }
 template<class T>
 DynamixelStatus DynamixelInterface::regWrite(uint8_t aID, uint8_t aAddress, const T& aData, uint8_t aStatusReturnLevel)
@@ -109,7 +112,10 @@ inline DynamixelStatus DynamixelInterface::read(uint8_t aID, uint16_t aAddress, 
 {
     return read(0x01, aID, aAddress, aSize, aData, aStatusReturnLevel);
 }
-
+inline DynamixelStatus DynamixelInterface::write(uint8_t aID, uint16_t aAddress, uint8_t aSize, uint8_t *aData, uint8_t aStatusReturnLevel)
+{
+    return write(0x01, aID, aAddress, aSize, aData, aStatusReturnLevel);
+}
 #if defined(ARDUINO)
 #error "ARDUINO defined"
 #include "DynamixelInterfaceArduinoImpl.h"
