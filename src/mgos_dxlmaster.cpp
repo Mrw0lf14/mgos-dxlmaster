@@ -4,9 +4,9 @@
 /* Dynamixel Devices **********************************************************/
 /******************************************************************************/
 
-DynamixelDevice *mgos_dxl_module_create(int model_id)
+DynamixelDevice *mgos_dxl_module_create(int model_id, int ver)
 {
-    return new DynamixelDevice(model_id);
+    return new DynamixelDevice(model_id, ver);
 }
 
 void mgos_dxl_master_begin(uint32_t baud)
@@ -110,9 +110,9 @@ DynamixelStatus mgos_dxl_write16(DynamixelDevice *module,
 
 /* Dynamixel direct operations ************************************************/
 /******************************************************************************/
-uint8_t mgos_dxl_direct_ping(uint8_t id)
+uint8_t mgos_dxl_direct_ping(uint8_t ver, uint8_t id)
 {
-    return DxlMaster.ping(DxlMaster.mVer, id);
+    return DxlMaster.ping(ver, id);
 }
 
 void mgos_dxl_direct_begin(uint32_t baud)
