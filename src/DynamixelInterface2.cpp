@@ -433,7 +433,7 @@ DynamixelStatus DynamixelInterface::bulkRead(
         mPacket2 = DynamixelPacket2(BROADCAST_ID, BULK_READ_TX_LENGTH + aSize, INST_BULK_READ, aTxBuf, aSize);
         prepareTransaction();
         sendPacket2(mPacket2);
-        uint8_t temp_status;
+        uint8_t temp_status = 0;
 
         uint16_t rx_offset = 0;
         for (size_t i = 0; i < nID; i++)
