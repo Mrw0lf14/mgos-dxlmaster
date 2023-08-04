@@ -224,7 +224,7 @@ DynamixelStatus DynamixelConsole::read(int argc, char **argv)
 	}
 
 	uint8_t *ptr = new uint8_t[length];
-	DynamixelStatus result = DxlMaster.read(id, addr, length, ptr);
+	DynamixelStatus result = DxlMaster.read(mVer, id, addr, length, ptr);
 	printData(ptr,length); 
 	delete ptr;
 	return result;
@@ -259,9 +259,9 @@ DynamixelStatus DynamixelConsole::write(int argc, char **argv)
 
 	DynamixelStatus result;
 	if(argv[0][0] == 'r') {
-		result=DxlMaster.regWrite(id, addr, length, ptr);
+		result = DxlMaster.regWrite(mVer, id, addr, length, ptr);
 	} else {
-		result=DxlMaster.write(id, addr, length, ptr);
+		result = DxlMaster.write(mVer, id, addr, length, ptr);
 	}
 
 	delete ptr;
@@ -298,7 +298,7 @@ DynamixelStatus DynamixelConsole::action(int argc, char **argv)
 		return DYN_STATUS_INTERNAL_ERROR;
 	}
 
-	DynamixelStatus result=DxlMaster.action(id);
+	DynamixelStatus result = DxlMaster.action(mVer, id);
 	return result;
 }
 
