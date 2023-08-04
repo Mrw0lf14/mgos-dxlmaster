@@ -281,7 +281,7 @@ DynamixelStatus DynamixelConsole::reset(int argc, char **argv)
 		return DYN_STATUS_INTERNAL_ERROR;
 	}
 
-	DynamixelStatus result=DxlMaster.reset(id);
+	DynamixelStatus result = DxlMaster.reset(mVer, id);
 	return result;
 }
 

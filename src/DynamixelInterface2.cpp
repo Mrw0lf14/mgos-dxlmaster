@@ -408,7 +408,7 @@ DynamixelStatus DynamixelInterface::fastSyncRead(
             receivePacket2(mPacket2, 0, RECEIVE_FAST);
         }
         
-        endTransaction();
+        endTransaction(mPacket.mStatus);
         free(params);
         return temp_status;
     }
@@ -447,7 +447,7 @@ DynamixelStatus DynamixelInterface::bulkRead(
             temp_status = temp_status | mPacket2.mStatus;
         }
     
-        endTransaction();
+        endTransaction(mPacket.mStatus);
 
         return temp_status;
 
