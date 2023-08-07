@@ -11,10 +11,7 @@ let DynamixelDevice = {
     _write16: ffi('int mgos_dxl_write16(void *, int, int )'),
 
     _proto: {
-        // Create module
-        create: function (id, ver) {
-            return DynamixelDevice._create(id, ver);
-        },
+
         // Initialize module
         init: function () {
             return DynamixelDevice._init(this.dxl);
@@ -63,9 +60,9 @@ let DynamixelDevice = {
     },
 
     // Create an DynamixelDevice module instance * given id
-    create: function (id) {
+    create: function (id, ver) {
         let obj = Object.create(DynamixelDevice._proto);
-        obj.dxl = DynamixelDevice._create(id);
+        obj.dxl = DynamixelDevice._create(id, ver);
         return obj;
     }
 };
@@ -93,7 +90,7 @@ let DxlDirectControl = {
     _ping: ffi ('uint8_t mgos_dxl_direct_ping(uint8_t, uint8_t)'),
 
     ping: function(id, ver){
-        return DxlDirectControl._ping(id, ver);
+        return DxlDirectControl._ping(ver, id);
     }
 }
 
