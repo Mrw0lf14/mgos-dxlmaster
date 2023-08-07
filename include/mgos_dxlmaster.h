@@ -38,7 +38,7 @@ DynamixelStatus mgos_dxl_write16(DynamixelDevice *module,
                                 uint8_t reg, 
                                 uint16_t var);                              
 
-uint8_t mgos_dxl_direct_ping(uint8_t id);
+uint8_t mgos_dxl_direct_ping(uint8_t ver, uint8_t id);
 void mgos_dxl_direct_begin(uint32_t baud);
 uint8_t mgos_dxl_direct_read(uint8_t id, uint8_t reg, 
                               const uint8_t *ptr, uint8_t size);

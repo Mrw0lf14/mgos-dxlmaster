@@ -1,5 +1,5 @@
 let DynamixelDevice = {
-    _create: ffi('void *mgos_dxl_module_create(int)'),
+    _create: ffi('void *mgos_dxl_module_create(int, int)'),
     _init: ffi('int mgos_dxl_init(void *)'),
     _speed: ffi('void mgos_dxl_communicationSpeed(void *, int)'),
     _status: ffi('int mgos_dxl_status(void *)'),
@@ -11,6 +11,10 @@ let DynamixelDevice = {
     _write16: ffi('int mgos_dxl_write16(void *, int, int )'),
 
     _proto: {
+        // Create module
+        create: function (id, ver) {
+            return DynamixelDevice._create(id, ver);
+        },
         // Initialize module
         init: function () {
             return DynamixelDevice._init(this.dxl);
