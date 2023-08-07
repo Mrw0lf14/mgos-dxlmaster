@@ -73,7 +73,6 @@ let DynamixelDevice = {
 let DxlMaster = {
     _begin:  ffi ('void mgos_dxl_master_begin(int)'),
     _enable: ffi ('void mgos_dxl_master_enable(int)'),
-
     
     begin: function(baud) {
         DxlMaster._begin(baud);
@@ -89,6 +88,14 @@ let DxlMaster = {
   
     set_uart_callback: ffi('void mgos_dxl_setUserUartCb( void(*)(int, void *, userdata), userdata)')
 };
+
+let DxlDirectControl = {
+    _ping: ffi ('uint8_t mgos_dxl_direct_ping(uint8_t, uint8_t)'),
+
+    ping: function(id, ver){
+        return DxlDirectControl._ping(id, ver);
+    }
+}
 
 let DynamixelConsole = {
     create: ffi('void *mgos_dxl_console_create(void)'),
