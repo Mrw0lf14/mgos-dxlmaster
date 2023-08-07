@@ -130,8 +130,8 @@ void DynamixelInterfaceImpl::sendPacket2(DynamixelPacket2 &aPacket)
 	dxlWrite(aPacket.mHead, 8);
 	dxlWrite(aPacket.mParams, aPacket.mParamSize);
 
-	dxlWrite((uint8_t)(aPacket.mCheckSum && 0xFF));
-	dxlWrite((uint8_t)(aPacket.mCheckSum >> 8));
+	dxlWrite(DXL_LOBYTE(aPacket.mCheckSum));
+	dxlWrite(DXL_HIBYTE(aPacket.mCheckSum));
 	mgos_uart_flush(mUARTno);
 	readMode();
 }
