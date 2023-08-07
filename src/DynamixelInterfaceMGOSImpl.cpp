@@ -127,7 +127,7 @@ void DynamixelInterfaceImpl::sendPacket2(DynamixelPacket2 &aPacket)
 	}
 
 	writeMode();
-	dxlWrite(aPacket.mHead, 8);
+	dxlWrite(aPacket.mHead, HEAD_LEN);
 	dxlWrite(aPacket.mParams, aPacket.mParamSize);
 
 	dxlWrite(DXL_LOBYTE(aPacket.mCheckSum));
