@@ -155,9 +155,9 @@ void mgos_dxl_console_loop(DynamixelConsole *console)
 /* Dynamixel Motor ************************************************************/
 /******************************************************************************/
 
-DynamixelMotor *mgos_dxl_motor_create(int motor_id)
+DynamixelMotor *mgos_dxl_motor_create(int motor_id, int ver)
 {
-    return new DynamixelMotor(motor_id);
+    return new DynamixelMotor(motor_id, ver);
 }
 
 DynamixelStatus mgos_dxl_motor_init(DynamixelMotor *module)

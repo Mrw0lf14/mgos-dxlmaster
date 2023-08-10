@@ -11,7 +11,7 @@
 class DynamixelMotor:public DynamixelDevice
 {
 	public:
-	DynamixelMotor(DynamixelID aId);
+	DynamixelMotor(DynamixelID aId, uint8_t aVersion = 1);
 	
 	void wheelMode();
 	void jointMode(uint16_t aCWLimit = 0, uint16_t aCCWLimit = 0x3FF);

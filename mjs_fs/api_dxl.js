@@ -92,7 +92,7 @@ let DynamixelConsole = {
 };
 
 let Dynamixelmotor = {
-    _create: ffi('void *mgos_dxl_motor_create(int)'),
+    _create: ffi('void *mgos_dxl_motor_create(int, int)'),
     _init: ffi('int mgos_dxl_motor_init(void *)'),
     _wheelMode: ffi('void mgos_dxl_motor_wheelMode(void *)'),
     _jointMode: ffi('void mgos_dxl_motor_jointMode(void *, int, int)'),
@@ -177,9 +177,9 @@ let Dynamixelmotor = {
     },
 
     // Create an Dynamixelmotor module instance * given id
-    create: function (id) {
+    create: function (id, ver) {
         let motor = Object.create(Dynamixelmotor._proto);
-        motor.id = Dynamixelmotor._create(id);
+        motor.id = Dynamixelmotor._create(id, ver);
         return motor;
     }
 };

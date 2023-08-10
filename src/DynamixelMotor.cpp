@@ -1,9 +1,9 @@
 #include "DynamixelMotor.h"
 
 
-DynamixelMotor::DynamixelMotor(DynamixelID aId): 
-	DynamixelDevice(aId)
-{}
+DynamixelMotor::DynamixelMotor(DynamixelID aId, uint8_t aVersion) : DynamixelDevice(aId, aVersion)
+{
+}
 
 
 void DynamixelMotor::wheelMode()
