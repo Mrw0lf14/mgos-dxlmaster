@@ -49,7 +49,7 @@ uint8_t mgos_dxl_direct_write(uint8_t id, uint8_t reg,
 DynamixelConsole *mgos_dxl_console_create(void);
 void mgos_dxl_console_loop(DynamixelConsole *console);
 
-DynamixelMotor *mgos_dxl_motor_create(int motor_id);
+DynamixelMotor *mgos_dxl_motor_create(int motor_id, int ver);
 DynamixelStatus mgos_dxl_motor_init(DynamixelMotor *module);
 void mgos_dxl_motor_wheelMode(DynamixelMotor *motor);
 void mgos_dxl_motor_jointMode(DynamixelMotor *motor, 
